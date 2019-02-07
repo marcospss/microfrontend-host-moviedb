@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import logo from './../../assets/images/logo.png';
 
 class Header extends Component {
   render() {
@@ -7,7 +8,7 @@ class Header extends Component {
         <header className="site-header">
             <div className="container">
                 <Link to='/' id="branding">
-                    <img src="/assets/images/logo.png" alt="" className="logo" />
+                    <img src={logo} alt="" className="logo" />
                     <div className="logo-copy">
                         <h1 className="site-title">The Movie Database (TMDb)</h1>
                         <small className="site-description">Is a community built movie and TV database.</small>
