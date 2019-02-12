@@ -1,6 +1,29 @@
 import React, { Component } from "react";
-
+import { DiscoverProvider, CommonProvider } from './../core/services/index';
 class Home extends Component {
+    
+   
+
+    constructor() {
+        super();
+        this.discover = new DiscoverProvider();
+        this.common = new CommonProvider();
+    }
+
+    
+
+    componentDidMount() {
+        this.filterDiscoverProperties = {
+            mediaType: 'movie',
+            sortBy: 'popularity.desc',
+            year: '',
+            genre: ''
+        };
+        this.discover.getDiscover(this.filterDiscoverProperties).then(response => {
+            console.log('DISCOVER -> ', response.data);
+        });
+    }
+      
   render() {
     return (
       <div className="page">
