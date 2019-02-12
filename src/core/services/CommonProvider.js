@@ -3,8 +3,6 @@ import axios from 'axios';
 
 export class CommonProvider {
 
-  constructor() {}
-
   /**
    * Get Credits
    * Get the cast and crew for a movie.

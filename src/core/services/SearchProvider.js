@@ -3,8 +3,6 @@ import axios from 'axios';
 
 export class SearchProvider {
 
-  constructor() {}
-
    /**
    * Multi Search
    * Search multiple models in a single request. Multi search currently supports searching for movies, tv shows and people in a single request.

@@ -3,8 +3,6 @@ import axios from 'axios';
 
 export class DiscoverProvider {
 
-  constructor() {}
-
    /**
     * Movie/TV Discover
     * Discover movies by different types of data like average rating, number of votes, genres and certifications. You can get a valid list of certifications from the  method.
