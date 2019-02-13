@@ -31,6 +31,7 @@ const Figure = styled.figure`
     float: left;
     margin-right: 10px;
     display: block;
+    width: 100px;
 `;
 
 const Overview = styled.div`
