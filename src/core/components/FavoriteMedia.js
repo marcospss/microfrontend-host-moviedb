@@ -1,17 +1,38 @@
 import React from "react";
+import styled from 'styled-components';
 
-const FavoriteMedia = () => {
+import { HelperProvider } from './../services/index';
+
+const helper = new HelperProvider();
+
+const FavoriteMedia = (props) => {
+    const { media } = props;
     return (
         <>
-            <button title="Adicionar: {{ utilsProvider.title(item) }}">
+            <Button title={ 'Adicionar: ' +  helper.title(media) }>
                 <span className="fa fa-heart-o"></span>
-            </button>
+            </Button>
 
-            <button title="Remover: {{ utilsProvider.title(item) }}">
+            <Button title={ 'Remover: ' + helper.title(media) }>
                 <span className="fa fa-heart"></span>
-            </button>
+            </Button>
         </>
     );
 };
+
+const Button = styled.button`
+    position: absolute;
+    z-index: 100;
+    display: block;
+    height: 30px;
+    width: 30px;
+    top: 5px;
+    right: 5px;
+    overflow: hidden;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    background: none;
+`;
 
 export default FavoriteMedia;

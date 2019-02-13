@@ -13,7 +13,7 @@ const CardPosterImage = (props) => {
     const linkMedia = `/details/${mediaType}/${id}`;
     return (
         <>
-            <FavoriteMedia />
+            <FavoriteMedia media={ props.data }/>
             <Figure>
                 <Link to={ linkMedia }>
                     <img src={ helper.backdropImage(poster_path) } alt={ helper.title(props.data) } />
