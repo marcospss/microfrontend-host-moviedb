@@ -5,17 +5,24 @@ import { HelperProvider } from './../services/index';
 
 const helper = new HelperProvider();
 
+const saveFavorite = (data) => {
+    console.log('saveFavorite -> ', data);
+};
+
 const FavoriteMedia = (props) => {
-    const { media } = props;
+    const { media, mediaType } = props;
+    const data = Object.assign(media, { mediaType: mediaType});
+
     return (
         <>
-            <Button title={ 'Adicionar: ' +  helper.title(media) }>
+            <Button onClick={()=> saveFavorite(data)} title={ 'Adicionar: ' +  helper.title(media) }>
                 <span className="fa fa-heart-o"></span>
             </Button>
-
+            {/*
             <Button title={ 'Remover: ' + helper.title(media) }>
                 <span className="fa fa-heart"></span>
             </Button>
+            */}
         </>
     );
 };
