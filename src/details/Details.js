@@ -52,6 +52,7 @@ class Details extends Component {
   render() {
     const { details, credits, recommendations, isLoading } = this.state;
     const { mediaType } = this.filterDetails;
+    const styleVoteAverage = { width: this.voteAverage() + '%'}
     return (
         <>
         {!isLoading ? (
@@ -76,7 +77,7 @@ class Details extends Component {
                             </div>
                             <ul className="movie-meta">
                                 <li><strong>Rating:</strong>
-                                    <div className="star-rating" title={ 'Rated ' + this.voteAverage() + ' out of 100'}><span><strong className="rating"> { this.voteAverage() } </strong> out of 100</span></div>
+                                    <div className="star-rating" title={ 'Rated ' + this.voteAverage() + ' out of 100'}><span style={ styleVoteAverage }><strong className="rating"> { this.voteAverage() } </strong> out of 100</span></div>
                                 </li>
                                 <li><strong>Length:</strong> { this.runtime() }</li>
                                 <li><strong>Premiere:</strong> { details.release_date }</li>
