@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from 'axios';
 
 import { CommonProvider, HelperProvider } from './../core/services/index';
 import { LoadingAnimation, FavoriteMedia, CardCast, CardPosterImage } from './../core/components/index';
@@ -21,19 +20,19 @@ class Details extends Component {
         this.filterDetails = props.match.params;
     }
     componentDidMount() {
-        axios.all([
+        this.helper.multipleRequests([
             this.common.getDetails(this.filterDetails), 
             this.common.getCredits(this.filterDetails),
             this.common.getRecommendations(this.filterDetails)
         ])
-        .then(axios.spread((details, credits, recommendations) => {
+        .then(response => {
             this.setState({
-                details: details.data,
-                credits: credits.data.cast,
-                recommendations: recommendations.data.results,
+                details: response[0].data,
+                credits: response[1].data.cast,
+                recommendations: response[2].data.results,
                 isLoading: false
               });
-        }))
+        })
         .catch(error => this.setState({ error, isLoading: false }));
 }
 

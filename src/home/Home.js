@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import axios from 'axios';
 
-import { DiscoverProvider, CommonProvider } from './../core/services/index';
+import { DiscoverProvider, CommonProvider, HelperProvider } from './../core/services/index';
 import { LoadingAnimation, CardBackdropImage, CardPosterImage } from './../core/components/index';
 class Home extends Component {
     state = {
@@ -15,6 +14,7 @@ class Home extends Component {
         super();
         this.discover = new DiscoverProvider();
         this.common = new CommonProvider();
+        this.helper = new HelperProvider();
     }
     
     componentDidMount() {
@@ -27,14 +27,14 @@ class Home extends Component {
         const filterTopRatedProperties = {
             mediaType: 'movie'
         };
-        axios.all([this.discover.getDiscover(this.filterDiscoverProperties), this.common.getTopRated(filterTopRatedProperties)])
-            .then(axios.spread((popular, topRated) => {
+        this.helper.multipleRequests([this.discover.getDiscover(this.filterDiscoverProperties), this.common.getTopRated(filterTopRatedProperties)])
+            .then(response => {
                 this.setState({
-                    popular: popular.data.results,
-                    topRated: topRated.data.results,
+                    popular: response[0].data.results,
+                    topRated: response[1].data.results,
                     isLoading: false
                   });
-            }))
+            })
             .catch(error => this.setState({ error, isLoading: false }));
     }
       
