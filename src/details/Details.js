@@ -66,10 +66,10 @@ class Details extends Component {
                         <div className="col-md-6">
                             <figure className="movie-poster">
                                 <img src={ this.helper.backdropImage(details.backdrop_path, 'w780') } alt={ this.helper.title(details) } />
-                                <FavoriteMedia media={ details } mediaType={ mediaType } />
                             </figure>
                         </div>
                         <div className="col-md-6">
+                            <FavoriteMedia media={ details } mediaType={ mediaType } />
                             <h2 className="movie-title">{ this.helper.title(details) }</h2>
                             <div className="movie-summary">
                                 <p>{ details.overview }</p>
@@ -90,7 +90,7 @@ class Details extends Component {
                                 <h1 className="section-title">Cast</h1>
                             </header>
                             { 
-                                credits.splice(0,9).map(item => {
+                                credits.splice(0,8).map(item => {
                                     const { id } = item;
                                     return (
                                     <div key={id} className="col-sm-6 col-md-3">

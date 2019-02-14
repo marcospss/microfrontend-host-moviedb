@@ -2,7 +2,7 @@ import React from "react";
 
 const Filters = () => {
     return (
-        <form className="filters" role="filter">
+        <form className="filters">
             <label for="year"><span>Year</span>
                     <select id="year" name="year" formControlName="year">
                         <option value="">None</option>
