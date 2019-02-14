@@ -1,14 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-const CardCast = () => {
+import { HelperProvider } from './../services/index';
+const helper = new HelperProvider();
+const CardCast = (props) => {
+    const { profile_path, character, name } = props.data;
     return (
         <div className="team">
             <figure className="team-image">
-                <img src="" alt="item.name" />
+                <img src={ helper.backdropImage(profile_path) } alt={ character } />
             </figure>
-            <h2 className="team-name">item.character</h2>
-            <small className="team-title">item.name</small>
+            <h2 className="team-name">{ character }</h2>
+            <small className="team-title">{ name }</small>
         </div>
     );
 };

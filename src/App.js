@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch }  from "react-router-dom";
 import Home from "./home/Home";
+import Details from './details/Details';
 import Discover from './discover/Discover';
 import Favorites from './favorites/Favorites';
 
@@ -19,6 +20,7 @@ class App extends Component {
                       <Route exact path="/" component={ Home } />
                       <Route path="/discover" component={ Discover } />
                       <Route path="/favorites" component={ Favorites } />
+                      <Route path="/details/:mediaType/:mediaId" component={ Details } />
                       <Route component={ PageNotFound } />
                   </Switch>
                 </div>

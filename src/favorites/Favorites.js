@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 class Favorites extends Component {
   render() {
     return (
       <div className="page">
         <div className="breadcrumbs">
-          <NavLink activeClassName="current-menu-item" exact to='/'>Home</NavLink>
+          <Link to='/'>Home</Link>
           <span>Favorites</span>
         </div>
         <div className="row">
