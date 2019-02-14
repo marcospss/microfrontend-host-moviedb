@@ -1,6 +1,19 @@
 import { SETTINGS as IMAGE_SETTINGS } from "../config/ImageSettings";
-
+import axios from 'axios';
 export class HelperProvider {
+
+    /**
+     * Performing multiple concurrent requests
+     * @param {Array} requests 
+     */
+    multipleRequests(requests) {
+        return axios.all(requests)
+        .then(axios.spread((...requests) => {
+            return {
+                ...requests
+            }
+        }))
+    }
 
     title(item) {
         return ((item.title) ? item.title : item.name);
