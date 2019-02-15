@@ -1,27 +1,38 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import { DiscoverProvider } from './../core/services/index';
+import { DiscoverProvider, CommonProvider } from './../core/services/index';
 import { LoadingAnimation, Filters, CardBackdropImage } from './../core/components/index';
 class Discover extends Component {
   state = {
         popular: [],
+        genres: [],
         errors: null
     }
 
     constructor() {
       super();
       this.discover = new DiscoverProvider();
+      this.common = new CommonProvider();
   }
 
-    componentDidMount() {
-      this.filterDiscoverProperties = {
-          mediaType: 'movie',
-          sortBy: 'popularity.desc',
-          year: '',
-          genre: ''
-      };
-      this.discover.getDiscover(this.filterDiscoverProperties)
+    listYears = [];
+    date =  new Date();
+    currentYear = this.date.getFullYear();
+
+    getYears = () => {
+        for (let year = this.currentYear + 1; year >= 1900; year -= 1) {
+            this.listYears.push(year);
+        };
+    }
+
+    getDiscover = (properties) => {
+
+      this.setState({
+        isLoading: true
+      });
+
+      this.discover.getDiscover(properties)
           .then(response => {
               this.setState({
                   popular: response.data.results,
@@ -29,19 +40,43 @@ class Discover extends Component {
                 });
           })
           .catch(error => this.setState({ error, isLoading: false }));
+    }
+
+    componentDidMount() {
+      this.getYears();
+      this.filterDiscoverProperties = {
+          mediaType: 'movie',
+          sortBy: 'popularity.desc',
+          year: '',
+          genre: ''
+      };
+
+      this.common.getGenres(this.filterDiscoverProperties.mediaType)
+      .then(response => {
+          this.setState({
+              genres: response.data.genres
+            });
+      })
+      .catch(error => this.setState({ error, isLoading: false }));
+
+      this.getDiscover(this.filterDiscoverProperties);
   }
 
   render() {
-    const { popular, isLoading } = this.state;
+    const { popular, genres, isLoading } = this.state;
     return (
       <>
         {!isLoading ? (
       <div className="page">
         <div className="breadcrumbs">
-          <Link activeClassName="current-menu-item" to='/'>Home</Link>
+          <Link to='/'>Home</Link>
           <span>Movie Review</span>
         </div>
-        <Filters />
+        <div className="row">
+          <div className="col-sm-12">
+            <Filters Years={ this.listYears } Genres={ genres } changePropertiesFilter={ this.getDiscover } />
+          </div>
+        </div>
         <article className="row">
           { 
               popular.map(item => {
@@ -58,9 +93,6 @@ class Discover extends Component {
                   )
               })
           }
-          <div className="">
-
-          </div>
         </article>
       </div>
        ) : (
