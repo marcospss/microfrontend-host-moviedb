@@ -1,16 +1,31 @@
 import React from "react";
 
-const Filters = () => {
+const Filters = (props) => {
+    const { Years, Genres, changePropertiesFilter } = props;
+
+    const filterDiscoverProperties = {
+        mediaType: 'movie',
+        sortBy: 'popularity.desc',
+        year: '',
+        genre: ''
+    };
+
     return (
-        <form className="filters">
-            <label for="year"><span>Year</span>
-                    <select id="year" name="year" formControlName="year">
+        <form className="filters" onSubmit={e => e.preventDefault()}>
+            <label htmlFor="year"><span>Year</span>
+                    <select id="year" name="year" onChange={ e => filterDiscoverProperties.year = e.target.value }>
                         <option value="">None</option>
-                        <option>year</option>
+                            { 
+                                Years.map(year => {
+                                    return (
+                                        <option key={ year } value={ year }>{ year }</option>
+                                    )
+                                })
+                            }
                     </select>
                 </label>
-            <label for="sortBy"><span>Sort By</span>
-                <select id="sortBy" name="sortBy" formControlName="sortBy">
+            <label htmlFor="sortBy"><span>Sort By</span>
+                <select id="sortBy" name="sortBy" onChange={ e => filterDiscoverProperties.sortBy = e.target.value }>
                     <option value="popularity.desc">Popularity Descending</option>
                     <option value="popularity.asc">Popularity Ascending</option>
                     <option value="vote_average.desc">Rating Descending</option>
@@ -21,16 +36,23 @@ const Filters = () => {
                     <option value="title.desc">Title (Z-A)</option>
                 </select>
             </label>
-            <label for="genre"><span>Genres</span>
-                <select id="genre" name="genre" formControlName="genre">
+            <label htmlFor="genre"><span>Genres</span>
+                <select id="genre" name="genre" onChange={ e => filterDiscoverProperties.genre = e.target.value }>
                     <option value="">None</option>
-                    <option>genre.name</option>
+                    { 
+                        Genres.map(genre => {
+                            return (
+                                <option key={ genre.id } value={ genre.id }>{ genre.name }</option>
+                            )
+                        })
+                    }
                 </select>
             </label>
-            <button>Filter <i className="fa fa-search"></i></button>
-
+            <button onClick= { () => changePropertiesFilter(filterDiscoverProperties) }>Filter <i className="fa fa-search"></i></button>
         </form>
     );
 };
+
+
 
 export default Filters;
