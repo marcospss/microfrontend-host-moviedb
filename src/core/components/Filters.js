@@ -13,7 +13,7 @@ const Filters = (props) => {
     return (
         <form className="filters" onSubmit={e => e.preventDefault()}>
             <label htmlFor="year"><span>Year</span>
-                    <select id="year" name="year" onChange={ e => filterDiscoverProperties.year = e.target.value }>
+                    <select id="year" name="year" onChange={ e => filterDiscoverProperties.year = e.currentTarget.value }>
                         <option value="">None</option>
                             { 
                                 Years.map(year => {
@@ -25,7 +25,7 @@ const Filters = (props) => {
                     </select>
                 </label>
             <label htmlFor="sortBy"><span>Sort By</span>
-                <select id="sortBy" name="sortBy" onChange={ e => filterDiscoverProperties.sortBy = e.target.value }>
+                <select id="sortBy" name="sortBy" onChange={ e => filterDiscoverProperties.sortBy = e.currentTarget.value }>
                     <option value="popularity.desc">Popularity Descending</option>
                     <option value="popularity.asc">Popularity Ascending</option>
                     <option value="vote_average.desc">Rating Descending</option>
@@ -37,7 +37,7 @@ const Filters = (props) => {
                 </select>
             </label>
             <label htmlFor="genre"><span>Genres</span>
-                <select id="genre" name="genre" onChange={ e => filterDiscoverProperties.genre = e.target.value }>
+                <select id="genre" name="genre" onChange={ e => filterDiscoverProperties.genre = e.currentTarget.value }>
                     <option value="">None</option>
                     { 
                         Genres.map(genre => {
