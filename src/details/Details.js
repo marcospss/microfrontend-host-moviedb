@@ -17,13 +17,18 @@ class Details extends Component {
         super(props);
         this.common = new CommonProvider();
         this.helper = new HelperProvider();
-        this.filterDetails = props.match.params;
+        this.filterDetails = this.props.match.params;
     }
+
     componentDidMount() {
+        this.getDetails(this.filterDetails);
+    }
+
+    getDetails(filterDetails) {
         this.helper.multipleRequests([
-            this.common.getDetails(this.filterDetails), 
-            this.common.getCredits(this.filterDetails),
-            this.common.getRecommendations(this.filterDetails)
+            this.common.getDetails(filterDetails), 
+            this.common.getCredits(filterDetails),
+            this.common.getRecommendations(filterDetails)
         ])
         .then(response => {
             this.setState({
@@ -34,7 +39,7 @@ class Details extends Component {
               });
         })
         .catch(error => this.setState({ error, isLoading: false }));
-}
+    }
 
     genres() {
         return this.state.details && this.state.details.genres.map((genre) => genre.name).join(' | ');
