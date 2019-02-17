@@ -20,6 +20,26 @@ class Details extends Component {
         this.filterDetails = this.props.match.params;
     }
 
+    componentDidUpdate(prevProps){
+        if(prevProps.match.params.mediaId !== this.props.match.params.mediaId ){
+            this.getDetails(this.props.match.params);
+        }
+      }
+
+    // static getDerivedStateFromProps(nextProps, prevState) {
+    //     // Store prevId in state so we can compare when props change.
+    //     // Clear out previously-loaded data (so we don't render stale stuff).
+    //     if (nextProps.id !== prevState.prevId) {
+    //         return {
+    //             externalData: null,
+    //             prevId: nextProps.id
+    //         };
+    //     }
+
+    //     // No state update necessary
+    //     return null;
+    // }
+
     componentDidMount() {
         this.getDetails(this.filterDetails);
     }
