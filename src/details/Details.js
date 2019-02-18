@@ -22,7 +22,13 @@ class Details extends Component {
 
     componentDidUpdate(prevProps){
         if(prevProps.match.params.mediaId !== this.props.match.params.mediaId ){
+            
+            this.setState({
+                isLoading: true
+            });
+
             this.getDetails(this.props.match.params);
+            this.helper.scrollTopPage();
         }
       }
 
