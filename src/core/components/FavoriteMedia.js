@@ -1,30 +1,78 @@
-import React from "react";
+import React, { Component } from "react";
 import styled from 'styled-components';
 
-import { HelperProvider } from './../services/index';
+import { HelperProvider, LocalStorage } from './../services/index';
 
-const helper = new HelperProvider();
+class FavoriteMedia extends Component {
 
-const saveFavorite = (data) => {
-    console.log('saveFavorite -> ', data);
-};
+    state = {
+        collection: [],
+        isLoading: false,
+        isFavorite: false
+    }
 
-const FavoriteMedia = (props) => {
-    const { media, mediaType } = props;
-    const data = Object.assign(media, { mediaType: mediaType});
+    constructor(props) {
+        super(props);
+        this.helper = new HelperProvider();
+        this.store = new LocalStorage();
+    }
 
-    return (
-        <>
-            <Button onClick={()=> saveFavorite(data)} title={ 'Adicionar: ' +  helper.title(media) }>
-                <span className="fa fa-heart-o"></span>
-            </Button>
-            {/*
-            <Button title={ 'Remover: ' + helper.title(media) }>
-                <span className="fa fa-heart"></span>
-            </Button>
-            */}
-        </>
-    );
+    saveFavorite = (data) => {
+        this.store.save(data);
+    };
+    
+    removeFavorite = (data) => {
+        this.store.remove(data);
+    };
+
+    checkFavorite(collection) {
+        const { id } = this.props.media;
+        this.setState({
+            isFavorite: id && collection.indexOf(id) > -1
+        });
+      }
+
+    componentDidMount() {
+        this.store.getAll().then(data => {
+            if(!!data.length) {
+                this.setState({
+                    collection: data.map((media)=> {
+                        return media.id
+                    }),
+                    isLoading: true
+                });
+            }
+            this.setState({
+                isLoading: true
+            });
+        });
+        this.checkFavorite(this.state.collection);
+    }
+
+    render() {
+        const { media, mediaType } = this.props;
+        const data = Object.assign(media, { mediaType: mediaType});
+        const { isLoading, isFavorite } = this.state;
+        return (
+            <>
+                { !isLoading ? (
+                    'CARREGANDO...'
+                    ) : (
+                    isFavorite ? (
+                        <Button onClick={()=> this.removeFavorite(data)} title={ 'Remover: ' + this.helper.title(media) }>
+                            <span className="fa fa-heart"></span>
+                        </Button>
+                        ) : (
+                            <Button onClick={()=> this.saveFavorite(data)} title={ 'Adicionar: ' +  this.helper.title(media) }>
+                            <span className="fa fa-heart-o"></span>
+                        </Button>
+                        )
+                    )
+                }
+            </>
+        );
+        
+    }
 };
 
 const Button = styled.button`
