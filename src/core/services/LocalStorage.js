@@ -4,16 +4,13 @@ const STORAGE_KEY = SETTINGS.storeName;
 
 export class LocalStorage {
 
-    dataLocalStorage = [];
-
-    constructor() {
-        this.dataLocalStorage = this.storage.get(STORAGE_KEY) || this.dataLocalStorage;
-    }
     /**
      * Return data from localStorage 
      */
     getAll() {
-        return this.dataLocalStorage;
+        return new Promise((resolve)=>{
+            resolve(localStorage.getItem(STORAGE_KEY) ? JSON.parse(localStorage.getItem(STORAGE_KEY)) : []);
+        });
     }
 
     /**
@@ -21,8 +18,8 @@ export class LocalStorage {
      * @param { object } item
      */
     save(data) {
-        this.dataLocalStorage = [...this.dataLocalStorage, data];
-        localStorage.setItem(STORAGE_KEY, this.dataLocalStorage);
+        let dataMerge = localStorage.getItem(STORAGE_KEY) ?  [...JSON.parse(localStorage.getItem(STORAGE_KEY)), data] : [data];
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(dataMerge));
     }
 
     /**
@@ -31,7 +28,7 @@ export class LocalStorage {
      */
     remove(data) {
         this.dataLocalStorage = this.dataLocalStorage.filter(item => item.id !== data.id);
-        localStorage.setItem(STORAGE_KEY, this.dataLocalStorage);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.dataLocalStorage));
     }
 
 }
