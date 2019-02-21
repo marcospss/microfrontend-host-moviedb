@@ -14,6 +14,7 @@ class Search extends Component {
         super();
         this.helper = new HelperProvider();
         this.search = new SearchProvider();
+        this.inputSearch = React.createRef();
     }
 
     searchMedia(query) {
@@ -23,7 +24,6 @@ class Search extends Component {
                     collection: result.data.results,
                     isLoading: false
                 });
-                console.log('getMultiSearch -> ', result.data);
             })
             .catch(error => this.setState({ error, isLoading: false }));
     };
@@ -41,13 +41,14 @@ class Search extends Component {
             showInputSearch: false,
             isLoading: true
         });
+        this.inputSearch.current.value = '';
     };
     render() {
         const { showInputSearch, isLoading, collection } = this.state;
         return (
             <>
             <form className="search-form" role="search">
-                <input onChange={ (e) => this.searchMedia(e.currentTarget.value) } type="text" name="query" id="query" placeholder="Search..." maxLength="30" className={ showInputSearch ? 'active' : '' } />
+                <input onChange={ (e) => this.searchMedia(e.currentTarget.value) } type="text" name="query" id="query" placeholder="Search..." maxLength="30" className={ showInputSearch ? 'active' : '' } ref={ this.inputSearch } />
                 <button onClick={ (e) => this.showInputSearch(e) }><i className="fa fa-search"></i></button>
             </form>
             {
