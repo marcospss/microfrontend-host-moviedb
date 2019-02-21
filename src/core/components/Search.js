@@ -1,9 +1,13 @@
 import React, { Component } from "react";
+import styled from 'styled-components';
+
 import { HelperProvider, SearchProvider } from './../services/index';
+import CardBackdropImage from './CardBackdropImage';
 class Search extends Component {
     state = {
         collection: [],
-        showInputSearch: false
+        showInputSearch: false,
+        isLoading: true
     }
 
     constructor() {
@@ -16,7 +20,8 @@ class Search extends Component {
         this.search.getMultiSearch(query)
             .then(result => {
                 this.setState({
-                    collection: result.data.results
+                    collection: result.data.results,
+                    isLoading: false
                 });
                 console.log('getMultiSearch -> ', result.data);
             })
@@ -29,15 +34,57 @@ class Search extends Component {
             showInputSearch: !this.state.showInputSearch
         });
     };
+
+    clearSearch() {
+        this.setState({
+            collection: [],
+            showInputSearch: false,
+            isLoading: true
+        });
+    };
     render() {
-        const { showInputSearch } = this.state;
+        const { showInputSearch, isLoading, collection } = this.state;
         return (
+            <>
             <form className="search-form" role="search">
                 <input onChange={ (e) => this.searchMedia(e.currentTarget.value) } type="text" name="query" id="query" placeholder="Search..." maxLength="30" className={ showInputSearch ? 'active' : '' } />
                 <button onClick={ (e) => this.showInputSearch(e) }><i className="fa fa-search"></i></button>
             </form>
+            {
+                !isLoading ? (
+                    <ListDropSearch>
+                        { 
+                        collection.map(item => {
+                            const { id, media_type } = item;
+                            return (
+                                <div key={id} className="col-sm-6 col-md-3">
+                                    <CardBackdropImage
+                                        data={item}
+                                        styleName="latest-movie"
+                                        mediaType={media_type}
+                                        showOverview={false}
+                                        clearSearch = {this.clearSearch.bind(this)}
+                                    />
+                                </div>
+                            )
+                        })
+                    }
+                    </ListDropSearch>
+                ) : (
+                    ''
+                )
+            }
+            </>
         );
     }
 };
+
+const ListDropSearch = styled.div`
+    position: absolute;
+    z-index: 9;
+    width: 100%;
+    left: 0;
+    background: #00000094;
+`
 
 export default Search;
