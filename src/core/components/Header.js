@@ -1,7 +1,8 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import logo from './../../assets/images/logo.png';
 
+import logo from './../../assets/images/logo.png';
+import Search from './Search'; 
 const Header = () => {
     return (
         <header className="site-header">
@@ -21,10 +22,7 @@ const Header = () => {
                         <li className="menu-item"><NavLink activeClassName="current-menu-item" to='/discover'>Discover</NavLink></li>
                         <li className="menu-item"><NavLink activeClassName="current-menu-item" to='/favorites'>Favorites</NavLink></li>
                     </ul>
-                    <form className="search-form" role="search">
-                        <input type="text" name="query" id="query" placeholder="Search..." />
-                        <button><i className="fa fa-search"></i></button>
-                    </form>
+                    <Search />
                 </div>
                 <div className="mobile-navigation"></div>
             </div>
