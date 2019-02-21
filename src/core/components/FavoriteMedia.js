@@ -5,6 +5,8 @@ import { HelperProvider, LocalStorage } from './../services/index';
 
 class FavoriteMedia extends Component {
 
+    isMounted = false;
+
     state = {
         collection: [],
         isLoading: false,
@@ -33,21 +35,28 @@ class FavoriteMedia extends Component {
       }
 
     componentDidMount() {
+        this.isMounted = true;
         this.store.getAll().then(data => {
-            if(!!data.length) {
+            if (this.isMounted) {
+                if(!!data.length) {
+                    this.setState({
+                        collection: data.map((media)=> {
+                            return media.id
+                        }),
+                        isLoading: true
+                    });
+                }
                 this.setState({
-                    collection: data.map((media)=> {
-                        return media.id
-                    }),
                     isLoading: true
                 });
             }
-            this.setState({
-                isLoading: true
-            });
         });
         this.checkFavorite(this.state.collection);
     }
+
+    componentWillUnmount() {
+        this.isMounted = false;
+      }
 
     render() {
         const { media, mediaType } = this.props;
