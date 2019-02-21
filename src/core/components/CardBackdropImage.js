@@ -6,13 +6,21 @@ import FavoriteMedia from './FavoriteMedia';
 
 const helper = new HelperProvider();
 
+
+
 const CardBackdropImage = (props) => {
-    const { styleName, mediaType, showOverview } = props;
+    const { styleName, mediaType, showOverview, clearSearch } = props;
     const { id, backdrop_path, overview } = props.data;
     const linkMedia = `/details/${mediaType}/${id}`;
 
+    const handleclearSearch = () => {
+        if (typeof props.clearSearch === 'function') {
+            clearSearch();
+        }
+    }
+
     return (
-        <div className={ styleName }>
+        <div className={ styleName } onClick={ () => { handleclearSearch() } }>
             <figure>
                 <Link to={ linkMedia }>
                     <img src={ helper.backdropImage(backdrop_path) } alt={ helper.title(props.data) } />
