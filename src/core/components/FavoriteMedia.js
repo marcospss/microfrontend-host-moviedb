@@ -5,7 +5,7 @@ import { HelperProvider, LocalStorage } from './../services/index';
 
 class FavoriteMedia extends Component {
 
-    isMounted = false;
+    _isMounted = false;
 
     state = {
         collection: [],
@@ -35,9 +35,9 @@ class FavoriteMedia extends Component {
       }
 
     componentDidMount() {
-        this.isMounted = true;
+        this._isMounted = true;
         this.store.getAll().then(data => {
-            if (this.isMounted) {
+            if (this._isMounted) {
                 if(!!data.length) {
                     this.setState({
                         collection: data.map((media)=> {
@@ -55,7 +55,7 @@ class FavoriteMedia extends Component {
     }
 
     componentWillUnmount() {
-        this.isMounted = false;
+        this._isMounted = false;
       }
 
     render() {
