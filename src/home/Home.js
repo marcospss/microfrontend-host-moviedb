@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import { DiscoverProvider, CommonProvider, HelperProvider } from './../core/services/index';
-import { LoadingAnimation, CardBackdropImage, CardPosterImage } from './../core/components/index';
+import { LoadingAnimation, CardBackdropImage, CardPosterImage, CarouselPopular } from './../core/components/index';
 class Home extends Component {
     state = {
         popular: [],
@@ -49,9 +49,10 @@ class Home extends Component {
                         <h1 className="section-title">Popular Movies</h1>
                     </header>
                     <div className="col-md-9">
-                        <div className="slider">
-                            <h1>Carrossel</h1>
-                        </div>
+                        <CarouselPopular 
+                            data={popular.splice(0,4)}
+                            mediaType="movie" 
+                        />
                     </div>
                     <div className="col-md-3">
                         <div className="row">
