@@ -1,6 +1,6 @@
-import { SETTINGS as IMAGE_SETTINGS } from "../config/ImageSettings";
+import { SETTINGS as IMAGE_SETTINGS } from "./../config/ImageSettings";
 import axios from 'axios';
-import defaultImage from './../../assets/images/default-image.png';
+import defaultImage from './../assets/images/default-image.png';
 
 export class HelperProvider {
 

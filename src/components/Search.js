@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 
-import { HelperProvider, SearchProvider } from './../services/index';
+import { HelperProvider, SearchProvider } from './../services';
 import CardBackdropImage from './CardBackdropImage';
 class Search extends Component {
     state = {

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { HelperProvider, LocalStorage } from './../core/services/index';
-import { LoadingAnimation } from './../core/components/index';
+import { HelperProvider, LocalStorage } from './../services';
+import { LoadingAnimation } from './../components';
 class Favorites extends Component {
 
   state = {

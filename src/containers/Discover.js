@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import { DiscoverProvider, CommonProvider } from './../core/services/index';
-import { LoadingAnimation, Filters, CardBackdropImage } from './../core/components/index';
+import { DiscoverProvider, CommonProvider } from './../services';
+import { LoadingAnimation, Filters, CardBackdropImage } from './../components';
 class Discover extends Component {
   state = {
         popular: [],

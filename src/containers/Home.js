@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
-import { DiscoverProvider, CommonProvider, HelperProvider } from './../core/services/index';
-import { LoadingAnimation, CardBackdropImage, CardPosterImage, CarouselPopular } from './../core/components/index';
+import { DiscoverProvider, CommonProvider, HelperProvider } from './../services';
+import { LoadingAnimation, CardBackdropImage, CardPosterImage, CarouselPopular } from './../components';
 class Home extends Component {
     state = {
         popular: [],

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch }  from "react-router-dom";
-import Home from "./home/Home";
-import Details from './details/Details';
-import Discover from './discover/Discover';
-import Favorites from './favorites/Favorites';
+import Home from "./containers/Home";
+import Details from './containers/Details';
+import Discover from './containers/Discover';
+import Favorites from './containers/Favorites';
 
-import Header from './core/components/Header';
-import Footer from './core/components/Footer';
-import PageNotFound from './core/components/PageNotFound';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import PageNotFound from './components/PageNotFound';
 class App extends Component {
   render() {
     return (

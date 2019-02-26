@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { HelperProvider } from './../services/index';
+import { HelperProvider } from './../services';
 import FavoriteMedia from './FavoriteMedia';
 
 const helper = new HelperProvider();

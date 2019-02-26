@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import { CommonProvider, HelperProvider } from './../core/services/index';
-import { LoadingAnimation, FavoriteMedia, CardCast, CardPosterImage } from './../core/components/index';
+import { CommonProvider, HelperProvider } from './../services';
+import { LoadingAnimation, FavoriteMedia, CardCast, CardPosterImage } from './../components';
 class Details extends Component {
     
     state = {

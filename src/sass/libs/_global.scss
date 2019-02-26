@@ -4,10 +4,7 @@
 
 $browser-context: 15; // Default
 body {
-    background-color: $bg-color;
-    background-image: url(./assets/images/background.jpg);
-    background-position: top center;
-    background-repeat: no-repeat;
+    background: $bg-color url(./assets/images/background.jpg) top center;
     color: $body-color;
     font-family: $primary-font;
     font-size: #{$browser-context}px;

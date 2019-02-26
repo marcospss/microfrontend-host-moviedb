@@ -1,4 +1,4 @@
-import { SETTINGS } from './../../core/config/settings';
+import { SETTINGS } from './../config/settings';
 import axios from 'axios';
 
 export class CommonProvider {

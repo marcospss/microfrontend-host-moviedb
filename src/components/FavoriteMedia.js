@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 
-import { HelperProvider, LocalStorage } from './../services/index';
+import { HelperProvider, LocalStorage } from './../services';
 
 class FavoriteMedia extends Component {
 
