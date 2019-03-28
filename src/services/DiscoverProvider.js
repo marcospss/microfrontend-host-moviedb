@@ -14,18 +14,14 @@ import axios from 'axios';
     * @param { String } fieldFilter
     * @returns Movie List Result Object
    */
-  export async function getDiscover(filters) {
+  export function getDiscover(filters) {
     const mediaType = filters.mediaType,
     sortBy = filters.sortBy,
     year = filters.year,
     genre = filters.genre,
     fieldFilter = (mediaType === 'movie') ? 'year' : 'first_air_date_year';
     // TODO: https://github.com/axios/axios#config-defaults
-    try {
-      const response = await axios.get(`${SETTINGS.apiEndpoint}/discover/${mediaType}?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}&sort_by=${sortBy}&with_genres=${genre}&${fieldFilter}=${year}`);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    return axios.get(`${SETTINGS.apiEndpoint}/discover/${mediaType}?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}&sort_by=${sortBy}&with_genres=${genre}&${fieldFilter}=${year}`);
+  }
+
   

@@ -25,23 +25,68 @@ class Home extends Component {
     componentDidMount() {
         const { popular, actions } = this.props;
         
-        if (popular.length === 0) {
+        // if (popular.length === 0) {
             actions.loadPopular(filterDiscoverProperties)
                 .catch(error => {
                     console.error("Loading popular failed " + error);
                 });
-        }
+        // }
         
     }
 
     render() {
-        const { popular: { data: popular } } = this.props;
+        const { popular: { results } } = this.props;
+        debugger;
         return(
-            <div className="page">
-                <h1>Marcos</h1>
-                <pre>[{ popular }]</pre>
+                        <div className="page">
+                    <article className="row">
+                        <header className="col-sm-12">
+                            <h1 className="section-title">Popular Movies</h1>
+                        </header>
+                        <div className="col-md-9">
+                            {/* <CarouselPopular 
+                                data={results.splice(0,4)}
+                                mediaType="movie" 
+                            /> */}
+                        </div>
+                        <div className="col-md-3">
+                            <div className="row">
+                                {/* 
+                                    results.splice(4,3).map(item => {
+                                        const { id } = item;
+                                        return (
+                                            <div key={id} className="col-sm-6 col-md-12">
+                                                <CardBackdropImage
+                                                    data={item}
+                                                    styleName="latest-movie"
+                                                    mediaType="movie"
+                                                    showOverview={false}
+                                                />
+                                            </div>
+                                        )
+                                    })
+                                */}
+                            </div>
+                        </div>
+                    </article>
+                    <article className="row">
+                        { 
+                            // results.splice(4,4).map(item => {
+                            //     const { id } = item;
+                            //     return (
+                            //         <div key={id} className="col-sm-6 col-md-3">
+                            //             <CardBackdropImage
+                            //                 data={item}
+                            //                 styleName="latest-movie"
+                            //                 mediaType="movie"
+                            //                 showOverview={true}
+                            //             />
+                            //         </div>
+                            //     )
+                            // })
+                        }
+                    </article>
             </div>
-            
         );
     }
     // render() {
