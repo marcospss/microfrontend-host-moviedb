@@ -1,8 +1,7 @@
 import React from "react";
 import styled from 'styled-components';
 
-import { HelperProvider } from './../services';
-const helper = new HelperProvider();
+import { HelperProvider as helper } from './../services';
 const CardCast = (props) => {
     const { profile_path, character, name } = props.data;
     return (

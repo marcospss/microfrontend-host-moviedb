@@ -1,5 +1,14 @@
-export { DiscoverProvider } from './DiscoverProvider';
-export { SearchProvider } from './SearchProvider';
-export { CommonProvider } from './CommonProvider';
-export { HelperProvider } from './HelperProvider';
-export { LocalStorage } from './LocalStorage';
+import * as DiscoverProvider from './DiscoverProvider';
+import * as CommonProvider from './CommonProvider';
+import * as SearchProvider from './SearchProvider';
+import * as HelperProvider from './HelperProvider';
+import * as LocalStorage from './LocalStorage';
+
+
+export {
+    DiscoverProvider,
+    CommonProvider,
+    SearchProvider,
+    HelperProvider,
+    LocalStorage
+};

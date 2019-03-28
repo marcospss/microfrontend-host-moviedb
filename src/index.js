@@ -6,10 +6,18 @@ import "./styles.scss";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 
+// REDUX
+import configureStore from "./state/configureStore";
+import { Provider as ReduxProvider } from "react-redux";
+
+const store = configureStore();
+
 ReactDOM.render(
-  <Router>
-    <Route component={App} />
-  </Router>,
+  <ReduxProvider store={ store }>
+    <Router>
+      <Route component={ App } />
+    </Router>
+  </ReduxProvider>,
   document.getElementById('root')
 );
 

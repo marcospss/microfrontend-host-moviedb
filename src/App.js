@@ -18,10 +18,10 @@ class App extends Component {
                 <div className="container">
                   <Switch>
                       <Route exact path="/" component={ Home } />
-                      <Route path="/discover" component={ Discover } />
+                      {/* <Route path="/discover" component={ Discover } />
                       <Route path="/favorites" component={ Favorites } />
                       <Route path="/details/:mediaType/:mediaId" component={ Details } />
-                      <Route component={ PageNotFound } />
+                      <Route component={ PageNotFound } /> */}
                   </Switch>
                 </div>
           </main>

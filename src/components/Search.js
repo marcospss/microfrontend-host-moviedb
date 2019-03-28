@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 
-import { HelperProvider, SearchProvider } from './../services';
+import { HelperProvider as helper, SearchProvider as search} from './../services';
 import CardBackdropImage from './CardBackdropImage';
 class Search extends Component {
     state = {
@@ -12,8 +12,6 @@ class Search extends Component {
 
     constructor() {
         super();
-        this.helper = new HelperProvider();
-        this.search = new SearchProvider();
         this.inputSearch = React.createRef();
     }
 
