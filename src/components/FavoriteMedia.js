@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 
-import { HelperProvider, LocalStorage } from './../services';
+import { HelperProvider as helper, LocalStorage as store } from './../services';
 
 class FavoriteMedia extends Component {
 
@@ -15,8 +15,6 @@ class FavoriteMedia extends Component {
 
     constructor(props) {
         super(props);
-        this.helper = new HelperProvider();
-        this.store = new LocalStorage();
     }
 
     saveFavorite = (data) => {

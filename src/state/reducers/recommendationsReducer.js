@@ -1,9 +1,9 @@
 import * as types from "./../actions/actionTypes";
 import initialState from "./initialState";
 
-export default function popularReducer(state = initialState.popular, action) {
+export default function recommendationsReducer(state = initialState.recommendations, action) {
   switch (action.type) {
-    case types.POPULAR_MEDIAS.LOAD_SUCCESS:
+    case types.RECOMMENDATIONS_MEDIA.LOAD_SUCCESS:
       return action.payload;
     default:
       return state;

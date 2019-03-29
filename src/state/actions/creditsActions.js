@@ -1,35 +1,35 @@
 import * as types from "./actionTypes";
 import { beginApiCall, apiCallError } from "./apiCallStatusActions";
 import {
-    DiscoverProvider
+    CommonProvider
 } from '../../services';
 
 
-const loadPopularSuccess = (data) => {
+const loadCreditsSuccess = (data) => {
     return {
-        type: types.POPULAR_MEDIAS.LOAD_SUCCESS,
+        type: types.CREDITS_MEDIA.LOAD_SUCCESS,
         payload: data
     };
 };
 
-const loadPopularFailure = (data) => {
+const loadCreditsFailure = (data) => {
     return {
-        type: types.POPULAR_MEDIAS.LOAD_FAILURE,
+        type: types.CREDITS_MEDIA.LOAD_FAILURE,
         payload: data
     };
 };
 
-export const loadPopular = (filters) => {
+export const loadCredits = (filters) => {
     return (dispatch) => {
         dispatch(beginApiCall());
-        return DiscoverProvider
-            .getDiscover(filters)
+        return CommonProvider
+            .getCredits(filters)
             .then(response => {
-                dispatch(loadPopularSuccess(response.data));
+                dispatch(loadCreditsSuccess(response.data));
             })
             .catch(response => {
                 dispatch(apiCallError(response.error));
-                dispatch(loadPopularFailure(response.error));
+                dispatch(loadCreditsFailure(response.error));
             });
     };
 };

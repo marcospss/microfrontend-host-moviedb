@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 
 import * as popularActions from "./../state/actions/popularActions";
+import * as topRatedActions from "./../state/actions/topRatedActions";
 import {
   LoadingAnimation,
   CardBackdropImage,
@@ -11,186 +12,132 @@ import {
   CarouselPopular
 } from "./../components";
 
-const filterDiscoverProperties = {
-    mediaType: 'movie',
-    sortBy: 'popularity.desc',
-    year: '',
-    genre: ''
-};
-
-const filterTopRatedProperties = {
-    mediaType: 'movie'
-};
 class Home extends Component {  
     componentDidMount() {
-        const { popular, actions } = this.props;
-        
-        // if (popular.length === 0) {
-            actions.loadPopular(filterDiscoverProperties)
-                .catch(error => {
-                    console.error("Loading popular failed " + error);
-                });
-        // }
-        
+        const { actions, filterProperties } = this.props;
+        actions.loadPopular(filterProperties.discover);
+        actions.loadTopRated(filterProperties.topRated);
     }
 
     render() {
-        const { popular: { results } } = this.props;
-        debugger;
+        const { isLoading, popular: { results:popularResults }, topRated: { results:topRatedResults } } = this.props;
         return(
-                        <div className="page">
+            <>
+        {!isLoading ? (
+            <div className="page">
                     <article className="row">
                         <header className="col-sm-12">
                             <h1 className="section-title">Popular Movies</h1>
                         </header>
                         <div className="col-md-9">
-                            {/* <CarouselPopular 
-                                data={results.splice(0,4)}
+                            <CarouselPopular 
+                                data={popularResults}
                                 mediaType="movie" 
-                            /> */}
+                            />
                         </div>
-                        <div className="col-md-3">
-                            <div className="row">
-                                {/* 
-                                    results.splice(4,3).map(item => {
-                                        const { id } = item;
-                                        return (
-                                            <div key={id} className="col-sm-6 col-md-12">
-                                                <CardBackdropImage
-                                                    data={item}
-                                                    styleName="latest-movie"
-                                                    mediaType="movie"
-                                                    showOverview={false}
-                                                />
-                                            </div>
-                                        )
-                                    })
-                                */}
-                            </div>
+                    <div className="col-md-3">
+                        <div className="row">
+                            { 
+                                popularResults && popularResults.splice(3,3).map(item => {
+                                    return (
+                                        <div key={item.id} className="col-sm-6 col-md-12">
+                                            <CardBackdropImage
+                                                data={item}
+                                                styleName="latest-movie"
+                                                mediaType="movie"
+                                                showOverview={false}
+                                            />
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
-                    </article>
-                    <article className="row">
-                        { 
-                            // results.splice(4,4).map(item => {
-                            //     const { id } = item;
-                            //     return (
-                            //         <div key={id} className="col-sm-6 col-md-3">
-                            //             <CardBackdropImage
-                            //                 data={item}
-                            //                 styleName="latest-movie"
-                            //                 mediaType="movie"
-                            //                 showOverview={true}
-                            //             />
-                            //         </div>
-                            //     )
-                            // })
-                        }
-                    </article>
+                    </div>
+                </article>
+                <article className="row">
+                    { 
+                        popularResults && popularResults.splice(4,4).map(item => {
+                            return (
+                                <div key={item.id} className="col-sm-6 col-md-3">
+                                    <CardBackdropImage
+                                        data={item}
+                                        styleName="latest-movie"
+                                        mediaType="movie"
+                                        showOverview={true}
+                                    />
+                                </div>
+                            )
+                        })
+                    }
+                </article>
+                <article className="row">
+                    <header className="col-sm-12">
+                        <h1 className="section-title">Top Rated Movies</h1>
+                    </header>
+                    <div className="col-sm-12">
+                        <ul className="list-unstyled">
+                            { 
+                                topRatedResults && topRatedResults.splice(0,9).map(item => {
+                                    return (
+                                        <li key={item.id} className="col-sm-12 col-md-4">
+                                            <CardPosterImage 
+                                                data={item}
+                                                mediaType="movie"
+                                            />
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
+                </article>
             </div>
+            ) : (
+                <LoadingAnimation />
+              )
+            }
+            </>
         );
     }
-    // render() {
-    //     const { popular, topRated, isLoading } = this.state;
-    //     return (
-    //         <>
-    //         {!isLoading ? (
-    //             <div className="page">
-    //                 <article className="row">
-    //                     <header className="col-sm-12">
-    //                         <h1 className="section-title">Popular Movies</h1>
-    //                     </header>
-    //                     <div className="col-md-9">
-    //                         <CarouselPopular 
-    //                             data={popular.splice(0,4)}
-    //                             mediaType="movie" 
-    //                         />
-    //                     </div>
-    //                     <div className="col-md-3">
-    //                         <div className="row">
-    //                             { 
-    //                                 popular.splice(4,3).map(item => {
-    //                                     const { id } = item;
-    //                                     return (
-    //                                         <div key={id} className="col-sm-6 col-md-12">
-    //                                             <CardBackdropImage
-    //                                                 data={item}
-    //                                                 styleName="latest-movie"
-    //                                                 mediaType="movie"
-    //                                                 showOverview={false}
-    //                                             />
-    //                                         </div>
-    //                                     )
-    //                                 })
-    //                             }
-    //                         </div>
-    //                     </div>
-    //                 </article>
-    //                 <article className="row">
-    //                     { 
-    //                         popular.splice(4,4).map(item => {
-    //                             const { id } = item;
-    //                             return (
-    //                                 <div key={id} className="col-sm-6 col-md-3">
-    //                                     <CardBackdropImage
-    //                                         data={item}
-    //                                         styleName="latest-movie"
-    //                                         mediaType="movie"
-    //                                         showOverview={true}
-    //                                     />
-    //                                 </div>
-    //                             )
-    //                         })
-    //                     }
-    //                 </article>
-    //                 <article className="row">
-    //                     <header className="col-sm-12">
-    //                         <h1 className="section-title">Top Rated Movies</h1>
-    //                     </header>
-    //                     <div className="col-sm-12">
-    //                         <ul className="list-unstyled">
-    //                             { 
-    //                                 topRated.splice(0,9).map(item => {
-    //                                     const { id } = item;
-    //                                     return (
-    //                                         <li key={id} className="col-sm-12 col-md-4">
-    //                                             <CardPosterImage 
-    //                                                 data={item}
-    //                                                 mediaType="movie"
-    //                                             />
-    //                                         </li>
-    //                                     )
-    //                                 })
-    //                             }
-    //                         </ul>
-    //                     </div>
-    //                 </article>
-    //             </div>
-    //           ) : (
-    //             <LoadingAnimation />
-    //           )
-    //         }
-    //         </>
-    //     );
-    //   }
+    
 }
 
 function mapStateToProps(state) {
     return {
-        popular: state.popular
+        popular: state.popular,
+        topRated: state.topRated,
+        isLoading: state.apiCallsInProgress > 0
     }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            loadPopular: bindActionCreators(popularActions.loadPopular, dispatch)
+            loadPopular: bindActionCreators(popularActions.loadPopular, dispatch),
+            loadTopRated: bindActionCreators(topRatedActions.loadTopRated, dispatch),
+        }
+    }
+}
+
+Home.defaultProps = {
+    filterProperties: {
+        discover: {
+            mediaType: 'movie',
+            sortBy: 'popularity.desc',
+            year: '',
+            genre: ''
+        },
+        topRated: {
+            mediaType: 'movie'
         }
     }
 }
 
 Home.propTypes = {
-  popular: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
+    isLoading: PropTypes.bool.isRequired,
+    popular: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
+    filterProperties: PropTypes.object.isRequired
 };
 
 export default connect(

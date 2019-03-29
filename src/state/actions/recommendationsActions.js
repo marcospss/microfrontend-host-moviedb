@@ -4,36 +4,32 @@ import {
     CommonProvider
 } from '../../services';
 
-/**
- * Load Top Rated Medias
- * @param {*} data 
- */
 
-const loadTopRatedSuccess = (data) => {
+const loadRecommendationsSuccess = (data) => {
     return {
-        type: types.TOP_RATED_MEDIAS.LOAD_SUCCESS,
+        type: types.RECOMMENDATIONS_MEDIA.LOAD_SUCCESS,
         payload: data
     };
 };
 
-const loadTopRatedFailure = (data) => {
+const loadRecommendationsFailure = (data) => {
     return {
-        type: types.TOP_RATED_MEDIAS.LOAD_FAILURE,
+        type: types.RECOMMENDATIONS_MEDIA.LOAD_FAILURE,
         payload: data
     };
 };
 
-export const loadTopRated = (filters) => {
+export const loadRecommendations = (filters) => {
     return (dispatch) => {
         dispatch(beginApiCall());
         return CommonProvider
-            .getTopRated(filters)
+            .getRecommendations(filters)
             .then(response => {
-                dispatch(loadTopRatedSuccess(response.data));
+                dispatch(loadRecommendationsSuccess(response.data));
             })
             .catch(response => {
                 dispatch(apiCallError(response.error));
-                dispatch(loadTopRatedFailure(response.error));
+                dispatch(loadRecommendationsFailure(response.error));
             });
     };
 };

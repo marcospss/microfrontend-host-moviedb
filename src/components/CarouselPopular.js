@@ -4,19 +4,18 @@ import Carousel from 'react-bootstrap/Carousel';
 
 import { HelperProvider as helper } from './../services';
 import FavoriteMedia from './FavoriteMedia';
-const CarouselPopular = (props) => {
-    const { data, mediaType } = props;  
+const CarouselPopular = ({ data, mediaType }) => {
     return (
         <Carousel>
             { 
-                data.map(item => {
+                data && data.map(item => {
                     const { id, backdrop_path, overview } = item;
                     const linkMedia = `/details/${mediaType}/${id}`;
                     return (
                         <Carousel.Item key={id} >
-                            <FavoriteMedia media={ item } mediaType={ mediaType } />
+                            {/* <FavoriteMedia media={ item } mediaType={ mediaType } /> */}
                             <Link to={ linkMedia }>
-                                <img src={ helper.backdropImage(backdrop_path, 'w780') } alt={ helper.title(props.data) } />
+                                <img src={ helper.backdropImage(backdrop_path, 'w780') } alt={ helper.title(data) } />
                             </Link>
                             <Carousel.Caption>
                             <h3><Link to={ linkMedia }>{ helper.title(item) }</Link></h3>
