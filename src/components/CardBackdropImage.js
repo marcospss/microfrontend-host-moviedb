@@ -27,7 +27,7 @@ const CardBackdropImage = (props) => {
                 </Link>
                 <figcaption>
                     <Link to={ linkMedia }>{ helper.title(props.data) }</Link>
-                    {/* <FavoriteMedia media={ props.data } mediaType={ mediaType } /> */}
+                    <FavoriteMedia media={ props.data } mediaType={ mediaType } />
                 </figcaption>
             </figure>
             { showOverview ? 

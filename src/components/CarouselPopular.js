@@ -13,7 +13,7 @@ const CarouselPopular = ({ data, mediaType }) => {
                     const linkMedia = `/details/${mediaType}/${id}`;
                     return (
                         <Carousel.Item key={id} >
-                            {/* <FavoriteMedia media={ item } mediaType={ mediaType } /> */}
+                            <FavoriteMedia media={ item } mediaType={ mediaType } />
                             <Link to={ linkMedia }>
                                 <img src={ helper.backdropImage(backdrop_path, 'w780') } alt={ helper.title(data) } />
                             </Link>

@@ -12,23 +12,26 @@ import { HelperProvider as helper} from './../services';
 import { LoadingAnimation, FavoriteMedia, CardCast, CardPosterImage } from './../components';
 
 class Details extends Component {
-    
-    componentDidMount() {
-        const { actions, match: { params } } = this.props;
+
+    fetchData(actions, params) {
         actions.loadDetails(params);
         actions.loadCredits(params);
         actions.loadRecommendations(params);
     }
+    
+    componentDidMount() {
+        const { actions, match: { params } } = this.props;
+        this.fetchData(actions, params);
+    }
 
-    // componentDidUpdate(prevProps) {
-    //     const { actions, match: { params } } = prevProps;
-    //     if (params.mediaId !== this.props.match.params.mediaId) {
-    //         actions.loadDetails(params);
-    //         // actions.loadCredits(params);
-    //         // actions.loadRecommendations(params);
-    //         helper.scrollTopPage();
-    //     }
-    // }
+    componentDidUpdate(prevProps) {
+        // https://stackoverflow.com/questions/35622588/how-to-reset-the-state-of-a-redux-store/35641992#35641992
+        const { actions, match: { params } } = prevProps;
+        if (params.mediaId !== this.props.match.params.mediaId) {
+            helper.scrollTopPage();
+            this.fetchData(actions, params);
+        }
+    }
 
     render() {
         const { isLoading, details, credits: { cast:castMedia }, recommendations: { results:recommendationsMedia }, match: { params } } = this.props;
@@ -49,7 +52,7 @@ class Details extends Component {
                         </figure>
                     </div>
                     <div className="col-md-6">
-                        {/* <FavoriteMedia media={ details } mediaType={ mediaType } /> */}
+                        {/* <FavoriteMedia media={ details } mediaType={ params.mediaType } /> */}
                         <h2 className="movie-title">{ helper.title(details) }</h2>
                         <div className="movie-summary">
                             <p>{ details.overview }</p>

@@ -5,8 +5,8 @@ import topRated from './topRatedReducer';
 import details from './detailsReducer';
 import credits from './creditsReducer';
 import recommendations from './recommendationsReducer';
+import favorites from "./favoritesReducer";
 // import search from "./searchReducer";
-// import favorites from "./favoritesReducer";
 
 const rootReducer = combineReducers({
     apiCallsInProgress,
@@ -14,7 +14,8 @@ const rootReducer = combineReducers({
     topRated,
     details,
     credits,
-    recommendations
+    recommendations,
+    favorites
 });
 
 export default rootReducer;

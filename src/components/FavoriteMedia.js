@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 
-import { HelperProvider as helper, LocalStorage as store } from './../services';
+import { HelperProvider as helper, LocalStorage } from './../services';
 
 class FavoriteMedia extends Component {
 
@@ -9,32 +9,20 @@ class FavoriteMedia extends Component {
 
     state = {
         collection: [],
-        isLoading: false,
-        isFavorite: false
-    }
-
-    constructor(props) {
-        super(props);
+        isLoading: false
     }
 
     saveFavorite = (data) => {
-        this.store.save(data);
+        LocalStorage.save(data);
     };
     
     removeFavorite = (data) => {
-        this.store.remove(data);
+        LocalStorage.remove(data);
     };
-
-    checkFavorite(collection) {
-        const { id } = this.props.media;
-        this.setState({
-            isFavorite: id && collection.indexOf(id) > -1
-        });
-      }
 
     componentDidMount() {
         this._isMounted = true;
-        this.store.getAll().then(data => {
+        LocalStorage.getAll().then(data => {
             if (this._isMounted) {
                 if(!!data.length) {
                     this.setState({
@@ -49,7 +37,6 @@ class FavoriteMedia extends Component {
                 });
             }
         });
-        this.checkFavorite(this.state.collection);
     }
 
     componentWillUnmount() {
@@ -59,18 +46,18 @@ class FavoriteMedia extends Component {
     render() {
         const { media, mediaType } = this.props;
         const data = Object.assign(media, { mediaType: mediaType});
-        const { isLoading, isFavorite } = this.state;
+        const { isLoading } = this.state;
         return (
             <>
                 { !isLoading ? (
                     'CARREGANDO...'
                     ) : (
-                    isFavorite ? (
-                        <Button onClick={()=> this.removeFavorite(data)} title={ 'Remover: ' + this.helper.title(media) }>
+                        media.isFavorite ? (
+                        <Button onClick={()=> this.removeFavorite(data)} title={ 'Remover: ' + helper.title(media) }>
                             <span className="fa fa-heart"></span>
                         </Button>
                         ) : (
-                            <Button onClick={()=> this.saveFavorite(data)} title={ 'Adicionar: ' +  this.helper.title(media) }>
+                            <Button onClick={()=> this.saveFavorite(data)} title={ 'Adicionar: ' +  helper.title(media) }>
                             <span className="fa fa-heart-o"></span>
                         </Button>
                         )

@@ -5,6 +5,7 @@ import { bindActionCreators } from "redux";
 
 import * as popularActions from "./../state/actions/popularActions";
 import * as topRatedActions from "./../state/actions/topRatedActions";
+import * as favoritesActions from "./../state/actions/favoritesActions";
 import {
   LoadingAnimation,
   CardBackdropImage,
@@ -17,10 +18,12 @@ class Home extends Component {
         const { actions, filterProperties } = this.props;
         actions.loadPopular(filterProperties.discover);
         actions.loadTopRated(filterProperties.topRated);
+        actions.loadFavorites();
     }
 
     render() {
-        const { isLoading, popular: { results:popularResults }, topRated: { results:topRatedResults } } = this.props;
+        const { isLoading, popular:popularResults, topRated: { results:topRatedResults } } = this.props;
+
         return(
             <>
         {!isLoading ? (
@@ -104,8 +107,16 @@ class Home extends Component {
 
 function mapStateToProps(state) {
     return {
-        popular: state.popular,
+        popular: Object.keys(state.popular).length === 0 ? []
+        : state.popular.results.map(media => {
+            return {
+              ...media,
+              isFavorite: !!state.favorites.find(favorite => favorite.id === media.id)
+            };
+        }),
+        // popular: state.popular,
         topRated: state.topRated,
+        favorites: state.favorites,
         isLoading: state.apiCallsInProgress > 0
     }
 }
@@ -115,6 +126,7 @@ function mapDispatchToProps(dispatch) {
         actions: {
             loadPopular: bindActionCreators(popularActions.loadPopular, dispatch),
             loadTopRated: bindActionCreators(topRatedActions.loadTopRated, dispatch),
+            loadFavorites: bindActionCreators(favoritesActions.loadFavorites, dispatch),
         }
     }
 }
@@ -135,7 +147,7 @@ Home.defaultProps = {
 
 Home.propTypes = {
     isLoading: PropTypes.bool.isRequired,
-    popular: PropTypes.object.isRequired,
+    popular: PropTypes.array.isRequired,
     actions: PropTypes.object.isRequired,
     filterProperties: PropTypes.object.isRequired
 };

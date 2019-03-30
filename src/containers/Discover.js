@@ -1,69 +1,44 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
 
-import { DiscoverProvider, CommonProvider } from './../services';
+import { CommonProvider } from './../services';
+import * as popularActions from "./../state/actions/popularActions";
 import { LoadingAnimation, Filters, CardBackdropImage } from './../components';
+
 class Discover extends Component {
+
   state = {
-        popular: [],
-        genres: [],
-        errors: null
-    }
+    genres: []
+  };
 
-    constructor() {
-      super();
-      this.discover = new DiscoverProvider();
-      this.common = new CommonProvider();
-  }
+  getDiscover = (filterProperties, prevProps) => {
+    const { actions } = this.props;
+    console.log('getDiscover', filterProperties, 'prevProps', prevProps);
+    actions.loadPopular(filterProperties);
+  };
 
-    listYears = [];
-    date =  new Date();
-    currentYear = this.date.getFullYear();
-
-    getYears = () => {
-        for (let year = this.currentYear + 1; year >= 1900; year -= 1) {
-            this.listYears.push(year);
-        };
-    }
-
-    getDiscover = (properties) => {
-
+  componentDidMount() {
+    const { actions, filterProperties } = this.props;
+    getYears();
+    /**
+     * GENRES
+     */
+     CommonProvider.getGenres(filterProperties.discover.mediaType)
+    .then(response => {
       this.setState({
-        isLoading: true
+        genres: response.data.genres
       });
-
-      this.discover.getDiscover(properties)
-          .then(response => {
-              this.setState({
-                  popular: response.data.results,
-                  isLoading: false
-                });
-          })
-          .catch(error => this.setState({ error, isLoading: false }));
-    }
-
-    componentDidMount() {
-      this.getYears();
-      this.filterDiscoverProperties = {
-          mediaType: 'movie',
-          sortBy: 'popularity.desc',
-          year: '',
-          genre: ''
-      };
-
-      this.common.getGenres(this.filterDiscoverProperties.mediaType)
-      .then(response => {
-          this.setState({
-              genres: response.data.genres
-            });
-      })
-      .catch(error => this.setState({ error, isLoading: false }));
-
-      this.getDiscover(this.filterDiscoverProperties);
-  }
+    })
+    .catch(error => console.error('getGenres'));
+    actions.loadPopular(filterProperties.discover);
+}
 
   render() {
-    const { popular, genres, isLoading } = this.state;
+    const { isLoading, popular: { results:popularResults } } = this.props;
+    const { genres } = this.state;
     return (
       <>
         {!isLoading ? (
@@ -74,12 +49,12 @@ class Discover extends Component {
         </div>
         <div className="row">
           <div className="col-sm-12">
-            <Filters Years={ this.listYears } Genres={ genres } changePropertiesFilter={ this.getDiscover } />
+          <Filters Years={ getYears() } Genres={ genres } changePropertiesFilter={ this.getDiscover } />
           </div>
         </div>
         <article className="row">
           { 
-              popular.map(item => {
+              popularResults && popularResults.map(item => {
                   const { id } = item;
                   return (
                       <div key={id} className="col-sm-6 col-md-3">
@@ -104,4 +79,51 @@ class Discover extends Component {
   }
 }
 
-export default Discover;
+function getYears() {
+  const date =  new Date(),
+  currentYear = date.getFullYear();
+  let listYears = [];
+
+  for (let year = currentYear + 1; year >= 1900; year -= 1) {
+      listYears.push(year);
+  };
+
+  return listYears;
+}
+
+function mapStateToProps(state) {
+  return {
+      popular: state.popular,
+      isLoading: state.apiCallsInProgress > 0
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+      actions: {
+          loadPopular: bindActionCreators(popularActions.loadPopular, dispatch)     }
+  }
+}
+
+Discover.defaultProps = {
+  filterProperties: {
+      discover: {
+          mediaType: 'movie',
+          sortBy: 'popularity.desc',
+          year: '',
+          genre: ''
+      }
+  }
+}
+
+Discover.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  popular: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired,
+  filterProperties: PropTypes.object.isRequired
+};
+
+export default connect(
+mapStateToProps,
+mapDispatchToProps
+)(Discover);
