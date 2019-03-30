@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch }  from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Home from "./containers/Home";
 import Details from './containers/Details';
 import Discover from './containers/Discover';
@@ -24,6 +27,7 @@ class App extends Component {
                       <Route component={ PageNotFound } />
                   </Switch>
                 </div>
+                <ToastContainer autoClose={2000} />
           </main>
           <Footer />
         </div>

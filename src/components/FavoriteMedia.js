@@ -1,27 +1,44 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { bindActionCreators } from "redux";
 import styled from 'styled-components';
 
-import { HelperProvider as helper, LocalStorage } from './../services';
+import * as favoritesActions from "./../state/actions/favoritesActions";
 
+import { HelperProvider as helper, LocalStorage } from './../services';
+import { toast } from "react-toastify";
 class FavoriteMedia extends Component {
 
     // _isMounted = false;
 
-    state = {
-        collection: [],
-        isLoading: false
-    }
+    // state = {
+    //     collection: [],
+    //     isLoading: false
+    // }
 
-    saveFavorite = (data) => {
-        LocalStorage.save(data);
+    handleSaveFavorite = async media => {
+        toast.success("Favorite save success");
+        try {
+            await this.props.actions.saveFavorite(media);
+        } catch(error) {
+            toast.error("Delete failed. " + error.message);
+        }
     };
     
-    removeFavorite = (data) => {
-        LocalStorage.remove(data);
+    handleRemoveFavorite = async media => {
+        try {
+            await this.props.actions.removeFavorite(media);
+            toast.success("Favorite removed success");
+        } catch(error) {
+            toast.error("Delete failed. " + error.message);
+        }
     };
 
     // componentDidMount() {
-    //     this._isMounted = true;
+    //     // const { actions } = this.props;
+    //     // this._isMounted = true;
+    //     // actions.loadFavorites();
     // }
 
     // componentWillUnmount() {
@@ -35,11 +52,11 @@ class FavoriteMedia extends Component {
             <>
                 { 
                     data.isFavorite ? (
-                    <Button onClick={()=> this.removeFavorite(data)} title={ 'Remover: ' + helper.title(data) }>
+                    <Button onClick={()=> this.handleRemoveFavorite(data)} title={ 'Remover: ' + helper.title(data) }>
                         <span className="fa fa-heart"></span>
                     </Button>
                     ) : (
-                        <Button onClick={()=> this.saveFavorite(data)} title={ 'Adicionar: ' +  helper.title(data) }>
+                    <Button onClick={()=> this.handleSaveFavorite(data)} title={ 'Adicionar: ' +  helper.title(data) }>
                         <span className="fa fa-heart-o"></span>
                     </Button>
                     )
@@ -49,6 +66,27 @@ class FavoriteMedia extends Component {
         
     }
 };
+
+function mapStateToProps(state) {
+    return {
+        favorites: state.favorites.length === 0 ? []
+        : state.favorites.map(media => {
+            return {
+              ...media,
+              isFavorite: !!media.id === media.id
+            };
+        })
+    }
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: {
+            saveFavorite: bindActionCreators(favoritesActions.saveFavorite, dispatch),
+            removeFavorite: bindActionCreators(favoritesActions.removeFavorite, dispatch)
+        }
+    }
+}
 
 const Button = styled.button`
     position: absolute;
@@ -65,4 +103,7 @@ const Button = styled.button`
     background: none;
 `;
 
-export default FavoriteMedia;
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(FavoriteMedia);

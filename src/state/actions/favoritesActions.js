@@ -19,9 +19,9 @@ const loadFavoritesFailure = (data) => {
     };
 };
 
-const createFavoriteSuccess = (data) => {
+const saveFavoriteSuccess = (data) => {
     return {
-        type: types.FAVORITES_MEDIAS.CREATE,
+        type: types.FAVORITES_MEDIAS.SAVE,
         payload: data
     };
 };
@@ -49,26 +49,28 @@ export const loadFavorites = () => {
 
 export const saveFavorite = (data) => {
     return (dispatch) => {
-        dispatch(beginApiCall());
         return LocalStorage.save(data)
             .then(response => {
-                dispatch(createFavoriteSuccess(response));
+                console.log(response);
+                dispatch(saveFavoriteSuccess(response));
             })
             .catch(response => {
-                dispatch(apiCallError(response.error));
+                console.error(response);
+                throw response;
             });
     };
 };
 
 export const removeFavorite = (data) => {
     return (dispatch) => {
-        dispatch(beginApiCall());
         return LocalStorage.remove(data)
             .then(response => {
+                console.log(response);
                 dispatch(removeFavoriteSuccess(response));
             })
             .catch(response => {
-                dispatch(apiCallError(response.error));
+                console.error(response);
+                throw response;
             });
     };
 };
