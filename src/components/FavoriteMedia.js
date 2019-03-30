@@ -5,7 +5,7 @@ import { HelperProvider as helper, LocalStorage } from './../services';
 
 class FavoriteMedia extends Component {
 
-    _isMounted = false;
+    // _isMounted = false;
 
     state = {
         collection: [],
@@ -20,47 +20,28 @@ class FavoriteMedia extends Component {
         LocalStorage.remove(data);
     };
 
-    componentDidMount() {
-        this._isMounted = true;
-        LocalStorage.getAll().then(data => {
-            if (this._isMounted) {
-                if(!!data.length) {
-                    this.setState({
-                        collection: data.map((media)=> {
-                            return media.id
-                        }),
-                        isLoading: true
-                    });
-                }
-                this.setState({
-                    isLoading: true
-                });
-            }
-        });
-    }
+    // componentDidMount() {
+    //     this._isMounted = true;
+    // }
 
-    componentWillUnmount() {
-        this._isMounted = false;
-      }
+    // componentWillUnmount() {
+    //     this._isMounted = false;
+    //   }
 
     render() {
         const { media, mediaType } = this.props;
         const data = Object.assign(media, { mediaType: mediaType});
-        const { isLoading } = this.state;
         return (
             <>
-                { !isLoading ? (
-                    'CARREGANDO...'
+                { 
+                    data.isFavorite ? (
+                    <Button onClick={()=> this.removeFavorite(data)} title={ 'Remover: ' + helper.title(data) }>
+                        <span className="fa fa-heart"></span>
+                    </Button>
                     ) : (
-                        media.isFavorite ? (
-                        <Button onClick={()=> this.removeFavorite(data)} title={ 'Remover: ' + helper.title(media) }>
-                            <span className="fa fa-heart"></span>
-                        </Button>
-                        ) : (
-                            <Button onClick={()=> this.saveFavorite(data)} title={ 'Adicionar: ' +  helper.title(media) }>
-                            <span className="fa fa-heart-o"></span>
-                        </Button>
-                        )
+                        <Button onClick={()=> this.saveFavorite(data)} title={ 'Adicionar: ' +  helper.title(data) }>
+                        <span className="fa fa-heart-o"></span>
+                    </Button>
                     )
                 }
             </>
