@@ -5,7 +5,7 @@ import { bindActionCreators } from "redux";
 
 import * as popularActions from "./../state/actions/popularActions";
 import * as topRatedActions from "./../state/actions/topRatedActions";
-// import * as favoritesActions from "./../state/actions/favoritesActions";
+import * as favoritesActions from "./../state/actions/favoritesActions";
 import {
   LoadingAnimation,
   CardBackdropImage,
@@ -18,7 +18,7 @@ class Home extends Component {
         const { actions, filterProperties } = this.props;
         actions.loadPopular(filterProperties.discover);
         actions.loadTopRated(filterProperties.topRated);
-        // actions.loadFavorites();
+        actions.loadFavorites();
     }
 
     render() {
@@ -115,7 +115,7 @@ function mapStateToProps(state) {
         // }),
         popular: state.popular,
         topRated: state.topRated,
-        // favorites: state.favorites,
+        favorites: state.favorites,
         isLoading: state.apiCallsInProgress > 0
     }
 }
@@ -124,8 +124,8 @@ function mapDispatchToProps(dispatch) {
     return {
         actions: {
             loadPopular: bindActionCreators(popularActions.loadPopular, dispatch),
-            loadTopRated: bindActionCreators(topRatedActions.loadTopRated, dispatch)
-            // loadFavorites: bindActionCreators(favoritesActions.loadFavorites, dispatch),
+            loadTopRated: bindActionCreators(topRatedActions.loadTopRated, dispatch),
+            loadFavorites: bindActionCreators(favoritesActions.loadFavorites, dispatch)
         }
     }
 }

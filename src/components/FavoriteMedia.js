@@ -18,11 +18,11 @@ class FavoriteMedia extends Component {
     // }
 
     handleSaveFavorite = async media => {
-        toast.success("Favorite save success");
         try {
             await this.props.actions.saveFavorite(media);
+            toast.success("Favorite save success");
         } catch(error) {
-            toast.error("Delete failed. " + error.message);
+            toast.error("Save failed. " + error.message);
         }
     };
     
@@ -51,7 +51,7 @@ class FavoriteMedia extends Component {
         return (
             <>
                 { 
-                    data.isFavorite ? (
+                    !data.isFavorite ? (
                     <Button onClick={()=> this.handleRemoveFavorite(data)} title={ 'Remover: ' + helper.title(data) }>
                         <span className="fa fa-heart"></span>
                     </Button>
