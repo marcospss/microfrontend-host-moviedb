@@ -15,10 +15,12 @@ import {
 
 class Home extends Component {  
     componentDidMount() {
-        const { actions, filterProperties } = this.props;
-        actions.loadPopular(filterProperties.discover);
-        actions.loadTopRated(filterProperties.topRated);
-        actions.loadFavorites();
+        const { actions, popular, filterProperties } = this.props;
+        if(Object.keys(popular).length === 0) {
+            actions.loadPopular(filterProperties.discover);
+            actions.loadTopRated(filterProperties.topRated);
+            actions.loadFavorites();
+        }
     }
 
     render() {
