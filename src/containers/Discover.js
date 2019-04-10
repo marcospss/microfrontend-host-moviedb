@@ -14,9 +14,8 @@ class Discover extends Component {
     genres: []
   };
 
-  getDiscover = (filterProperties, prevProps) => {
+  getDiscover = (filterProperties) => {
     const { actions } = this.props;
-    console.log('getDiscover', filterProperties, 'prevProps', prevProps);
     actions.loadPopular(filterProperties);
   };
 
