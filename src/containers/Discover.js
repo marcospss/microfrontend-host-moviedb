@@ -101,7 +101,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
       actions: {
-          loadPopular: bindActionCreators(popularActions.loadPopular, dispatch)     }
+          loadPopular: bindActionCreators(popularActions.loadPopular, dispatch)
+      }
   }
 }
 
