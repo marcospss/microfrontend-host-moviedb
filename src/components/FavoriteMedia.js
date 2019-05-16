@@ -1,62 +1,72 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 import styled from 'styled-components';
 
 import * as favoritesActions from "./../state/actions/favoritesActions";
+import { HelperProvider } from './../services';
 
-import { HelperProvider as helper, LocalStorage } from './../services';
-import { toast } from "react-toastify";
 class FavoriteMedia extends Component {
 
-    // _isMounted = false;
+    _isMounted = false;
 
-    // state = {
-    //     collection: [],
-    //     isLoading: false
-    // }
+    state = {
+        isFavorite: false,
+        mediaId: null
+    }
 
-    handleSaveFavorite = async media => {
-        try {
-            await this.props.actions.saveFavorite(media);
-            toast.success("Favorite save success");
-        } catch(error) {
-            toast.error("Save failed. " + error.message);
-        }
+    saveFavorite = (data) => {
+        this.props.actions.saveFavorite(data);
+        this.props.actions.loadFavorites();
     };
     
-    handleRemoveFavorite = async media => {
-        try {
-            await this.props.actions.removeFavorite(media);
-            toast.success("Favorite removed success");
-        } catch(error) {
-            toast.error("Delete failed. " + error.message);
-        }
+    removeFavorite = (data) => {
+        this.props.actions.removeFavorite(data);
+        this.props.actions.loadFavorites();
     };
 
-    // componentDidMount() {
-    //     // const { actions } = this.props;
-    //     // this._isMounted = true;
-    //     // actions.loadFavorites();
-    // }
+    checkFavorite() {
+        const { media: { id }, favorites } = this.props;
+        favorites.forEach(item => {
+            const isFavoriteMedia = item.id === id;
+            if (isFavoriteMedia) {
+                this.setState({
+                    isFavorite: isFavoriteMedia
+                })
+            }
+        });
+    }
 
-    // componentWillUnmount() {
-    //     this._isMounted = false;
-    //   }
+    componentDidMount() {
+        this._isMounted = true;
+        const { media: { id } } = this.props;
+        this.setState({
+            mediaId: id
+        })
+        this.checkFavorite();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
+    componentWillReceiveProps(nextProps){
+        // 
+        this.checkFavorite();
+    }
 
     render() {
         const { media, mediaType } = this.props;
         const data = Object.assign(media, { mediaType: mediaType});
+        const { isFavorite } = this.state;
         return (
             <>
-                { 
-                    !data.isFavorite ? (
-                    <Button onClick={()=> this.handleRemoveFavorite(data)} title={ 'Remover: ' + helper.title(data) }>
+                { isFavorite ? (
+                    <Button onClick={()=> this.removeFavorite(data)} title={ 'Remover: ' + HelperProvider.title(media) }>
                         <span className="fa fa-heart"></span>
                     </Button>
                     ) : (
-                    <Button onClick={()=> this.handleSaveFavorite(data)} title={ 'Adicionar: ' +  helper.title(data) }>
+                    <Button onClick={()=> this.saveFavorite(data)} title={ 'Adicionar: ' +  HelperProvider.title(media) }>
                         <span className="fa fa-heart-o"></span>
                     </Button>
                     )
@@ -69,13 +79,14 @@ class FavoriteMedia extends Component {
 
 function mapStateToProps(state) {
     return {
-        favorites: state.favorites.length === 0 ? []
-        : state.favorites.map(media => {
-            return {
-              ...media,
-              isFavorite: !!media.id === media.id
-            };
-        })
+        // popular: Object.keys(state.popular).length === 0 ? []
+        // : state.popular.results.map(media => {
+        //     return {
+        //       ...media,
+        //       isFavorite: !!state.favorites.find(favorite => favorite.id === media.id)
+        //     };
+        // }),
+        favorites: state.favorites
     }
 }
 
@@ -83,7 +94,8 @@ function mapDispatchToProps(dispatch) {
     return {
         actions: {
             saveFavorite: bindActionCreators(favoritesActions.saveFavorite, dispatch),
-            removeFavorite: bindActionCreators(favoritesActions.removeFavorite, dispatch)
+            removeFavorite: bindActionCreators(favoritesActions.removeFavorite, dispatch),
+            loadFavorites: bindActionCreators(favoritesActions.loadFavorites, dispatch)
         }
     }
 }
@@ -106,4 +118,5 @@ const Button = styled.button`
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(FavoriteMedia);
+)(FavoriteMedia);
+  

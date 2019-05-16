@@ -5,10 +5,7 @@ export default function recommendationsReducer(state = initialState.recommendati
   const { type, payload } = action;
   switch (type) {
     case types.RECOMMENDATIONS_MEDIA.LOAD_SUCCESS:
-    return {
-      state,
-      ...payload
-    };
+      return Object.assign({}, state, payload);
     default:
       return state;
   }

@@ -1,4 +1,6 @@
 import { combineReducers } from "redux";
+import { connectRouter } from "connected-react-router";
+import history from "./../../routes/history";
 import apiCallsInProgress from './apiCallStatusReducer';
 import popular from "./popularReducer";
 import topRated from './topRatedReducer';
@@ -9,6 +11,7 @@ import favorites from "./favoritesReducer";
 // import search from "./searchReducer";
 
 const rootReducer = combineReducers({
+    router: connectRouter(history),
     apiCallsInProgress,
     popular,
     topRated,

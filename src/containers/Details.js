@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
@@ -7,29 +7,31 @@ import { bindActionCreators } from "redux";
 import * as detailsActions from "./../state/actions/detailsActions";
 import * as creditsActions from "./../state/actions/creditsActions";
 import * as recommendationsActions from "./../state/actions/recommendationsActions";
+import * as favoritesActions from "./../state/actions/favoritesActions";
 
 import { HelperProvider as helper} from './../services';
 import { LoadingAnimation, FavoriteMedia, CardCast, CardPosterImage } from './../components';
 
 class Details extends Component {
 
-    fetchData(actions, params) {
-        actions.loadDetails(params);
-        actions.loadCredits(params);
-        actions.loadRecommendations(params);
+    fetchData = (paramsUrl) => {
+        const { actions  } = this.props;
+        actions.loadDetails(paramsUrl);
+        actions.loadCredits(paramsUrl);
+        actions.loadRecommendations(paramsUrl);
+        actions.loadFavorites();
     }
     
     componentDidMount() {
-        const { actions, match: { params } } = this.props;
-        this.fetchData(actions, params);
+        const { match: { params } } = this.props;
+        this.fetchData(params);
     }
 
     componentDidUpdate(prevProps) {
-        // https://stackoverflow.com/questions/35622588/how-to-reset-the-state-of-a-redux-store/35641992#35641992
-        const { actions, match: { params } } = prevProps;
-        if (params.mediaId !== this.props.match.params.mediaId) {
+        const { match: { params } } = this.props;
+        if (this.props.match.params.mediaId !== prevProps.match.params.mediaId) {
             helper.scrollTopPage();
-            this.fetchData(actions, params);
+            this.fetchData(params);
         }
     }
 
@@ -52,7 +54,7 @@ class Details extends Component {
                         </figure>
                     </div>
                     <div className="col-md-6">
-                        {/* <FavoriteMedia media={ details } mediaType={ params.mediaType } /> */}
+                        <FavoriteMedia media={ details } mediaType={ params.mediaType } />
                         <h2 className="movie-title">{ helper.title(details) }</h2>
                         <div className="movie-summary">
                             <p>{ details.overview }</p>
@@ -73,7 +75,7 @@ class Details extends Component {
                             <h1 className="section-title">Cast</h1>
                         </header>
                         { 
-                            castMedia.splice(0,8).map(item => {
+                            castMedia.slice(0,8).map(item => {
                                 return (
                                 <div key={item.id} className="col-sm-6 col-md-3">
                                     <CardCast data={item} />
@@ -92,7 +94,7 @@ class Details extends Component {
                         <div className="col-sm-12">
                             <ul className="recommendations list-unstyled">
                             { 
-                                recommendationsMedia.splice(0,9).map(item => {
+                                recommendationsMedia.slice(0,8).map(item => {
                                     const { id } = item;
                                     return (
                                     <li key={id} className="col-sm-12 col-md-4">
@@ -150,6 +152,7 @@ function mapDispatchToProps(dispatch) {
             loadDetails: bindActionCreators(detailsActions.loadDetails, dispatch),
             loadCredits: bindActionCreators(creditsActions.loadCredits, dispatch),
             loadRecommendations: bindActionCreators(recommendationsActions.loadRecommendations, dispatch),
+            loadFavorites: bindActionCreators(favoritesActions.loadFavorites, dispatch)
         }
     }
 }
@@ -162,9 +165,8 @@ Details.propTypes = {
     actions: PropTypes.object.isRequired,
 };
 
-
-export default connect(
+export default withRouter(connect(
     mapStateToProps,
     mapDispatchToProps
-  )(Details);
+  )(Details));
   

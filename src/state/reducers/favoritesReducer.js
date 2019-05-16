@@ -7,8 +7,8 @@ export default function favoritesReducer(state = initialState.favorites, action)
         case types.FAVORITES_MEDIAS.LOAD_SUCCESS:
             return payload;
 
-        case types.FAVORITES_MEDIAS.CREATE:
-            return [...state, { ...payload }];
+        case types.FAVORITES_MEDIAS.SAVE:
+            return payload;
 
         case types.FAVORITES_MEDIAS.REMOVE:
             return state.filter(favorites => favorites.id !== payload.id);

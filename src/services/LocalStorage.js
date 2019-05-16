@@ -1,6 +1,4 @@
-import {
-    SETTINGS
-} from './../config/settings';
+import SETTINGS from './../config/settings';
 
 const STORAGE_KEY = SETTINGS.storeName;
 
@@ -22,16 +20,14 @@ export function save(data) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(dataMerge));
     return new Promise((resolve, reject) => {
         const saveSuccess = !!dataMerge.filter(item => parseInt(item.id, 10) === data.id).length;
-        if(saveSuccess) {
-            resolve({
-                message: 'Salvo com sucesso!'
-            });
+        if (saveSuccess) {
+            resolve(dataMerge);
         } else {
             reject({
                 message: 'Erro ao salvar'
             });
         }
-        
+
     });
 }
 
@@ -44,10 +40,8 @@ export function remove(data) {
     const removeFavorite = dataLocalStorage.filter(item => item.id !== data.id);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(removeFavorite));
     return new Promise((resolve, reject) => {
-        if(dataLocalStorage.length !== removeFavorite.length) {
-            resolve({
-                message: 'Removido com sucesso!'
-            });
+        if (dataLocalStorage.length !== removeFavorite.length) {
+            resolve(removeFavorite);
         } else {
             reject({
                 message: 'Erro ao remover'

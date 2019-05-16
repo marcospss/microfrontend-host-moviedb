@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 
 import { CommonProvider } from './../services';
 import * as popularActions from "./../state/actions/popularActions";
+import * as favoritesActions from "./../state/actions/favoritesActions";
 import { LoadingAnimation, Filters, CardBackdropImage } from './../components';
 
 class Discover extends Component {
@@ -33,6 +34,7 @@ class Discover extends Component {
     })
     .catch(error => console.error('getGenres'));
     actions.loadPopular(filterProperties.discover);
+    actions.loadFavorites();
 }
 
   render() {
@@ -100,7 +102,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
       actions: {
-          loadPopular: bindActionCreators(popularActions.loadPopular, dispatch)
+          loadPopular: bindActionCreators(popularActions.loadPopular, dispatch),
+          loadFavorites: bindActionCreators(favoritesActions.loadFavorites, dispatch)
       }
   }
 }
@@ -123,7 +126,7 @@ Discover.propTypes = {
   filterProperties: PropTypes.object.isRequired
 };
 
-export default connect(
+export default withRouter(connect(
 mapStateToProps,
 mapDispatchToProps
-)(Discover);
+)(Discover));

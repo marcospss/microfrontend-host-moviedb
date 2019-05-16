@@ -1,4 +1,4 @@
-export const SETTINGS = {
+const IMAGES_SETTINGS = {
     base_url: 'http://image.tmdb.org/t/p/',
     secure_base_url: 'https://image.tmdb.org/t/p/',
     backdrop_sizes: {
@@ -38,3 +38,5 @@ export const SETTINGS = {
         original: 'original'
     }
 };
+
+export default IMAGES_SETTINGS;

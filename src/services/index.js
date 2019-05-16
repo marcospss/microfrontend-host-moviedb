@@ -4,7 +4,6 @@ import * as SearchProvider from './SearchProvider';
 import * as HelperProvider from './HelperProvider';
 import * as LocalStorage from './LocalStorage';
 
-
 export {
     DiscoverProvider,
     CommonProvider,

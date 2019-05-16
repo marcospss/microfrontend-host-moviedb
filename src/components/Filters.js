@@ -1,19 +1,22 @@
 import React from "react";
 
-const Filters = ({ Years, Genres, changePropertiesFilter }) => {
+const Filters = (props) => {
+    const { Years, Genres, changePropertiesFilter } = props;
+
     const filterDiscoverProperties = {
         mediaType: 'movie',
         sortBy: 'popularity.desc',
         year: '',
         genre: ''
     };
+
     return (
         <form className="filters" onSubmit={e => e.preventDefault()}>
             <label htmlFor="year"><span>Year</span>
                     <select id="year" name="year" onChange={ e => filterDiscoverProperties.year = e.currentTarget.value }>
                         <option value="">None</option>
                             { 
-                                Years && Years.map(year => {
+                                Years.map(year => {
                                     return (
                                         <option key={ year } value={ year }>{ year }</option>
                                     )
@@ -37,7 +40,7 @@ const Filters = ({ Years, Genres, changePropertiesFilter }) => {
                 <select id="genre" name="genre" onChange={ e => filterDiscoverProperties.genre = e.currentTarget.value }>
                     <option value="">None</option>
                     { 
-                        Genres && Genres.map(genre => {
+                        Genres.map(genre => {
                             return (
                                 <option key={ genre.id } value={ genre.id }>{ genre.name }</option>
                             )
@@ -49,7 +52,5 @@ const Filters = ({ Years, Genres, changePropertiesFilter }) => {
         </form>
     );
 };
-
-
 
 export default Filters;

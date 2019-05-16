@@ -1,21 +1,16 @@
-import {
-    createStore,
-    applyMiddleware,
-    compose
-} from "redux";
-import rootReducer from "./reducers";
+import { createStore, applyMiddleware, compose } from "redux";
+import { connectRouter, routerMiddleware } from "connected-react-router";
 import thunk from "redux-thunk";
 
-export default function configureStore(initialState) {
-    const composeEnhancers =
-        window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // add support for Redux dev tools
+import rootReducer from "./reducers";
+import history from "./../routes/history";
 
-    // Be sure to ONLY add this middleware in development!
-    const middleware = process.env.NODE_ENV !== 'production' ? [require('redux-immutable-state-invariant').default(), thunk] : [thunk];
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // add support for Redux dev tools
+const middlewares = [routerMiddleware(history), thunk];
 
-    return createStore(
-        rootReducer,
-        initialState,
-        composeEnhancers(applyMiddleware(...middleware))
-    );
-}
+const store = createStore(
+  connectRouter(history)(rootReducer),
+  composeEnhancers(applyMiddleware(...middlewares))
+);
+
+export default store;

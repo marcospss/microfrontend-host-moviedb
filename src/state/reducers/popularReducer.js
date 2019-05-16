@@ -5,7 +5,7 @@ export default function popularReducer(state = initialState.popular, action) {
   const { type, payload } = action;
   switch (type) {
     case types.POPULAR_MEDIAS.LOAD_SUCCESS:
-      return payload;
+      return Object.assign({}, state, payload);
     default:
       return state;
   }

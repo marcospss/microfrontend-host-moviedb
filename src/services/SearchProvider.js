@@ -1,8 +1,5 @@
-import {
-  SETTINGS
-} from './../config/settings';
-import axios from 'axios';
-
+import SETTINGS from './../config/settings';
+import INSTANCE from './../config/instance';
 /**
  * Multi Search
  * Search multiple models in a single request. Multi search currently supports searching for movies, tv shows and people in a single request.
@@ -11,5 +8,5 @@ import axios from 'axios';
  * @returns  Movies, tv shows and people in a single request.
  */
 export function getMultiSearch(query) {
-  return axios.get(`${SETTINGS.apiEndpoint}/search/multi?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}&query=${query}`);
+  return INSTANCE.get(`/search/multi?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}&query=${query}`);
 }

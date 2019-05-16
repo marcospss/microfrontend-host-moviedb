@@ -5,10 +5,7 @@ export default function creditsReducer(state = initialState.credits, action) {
   const { type, payload } = action;
   switch (type) {
     case types.CREDITS_MEDIA.LOAD_SUCCESS:
-      return {
-        state,
-        ...payload
-      };
+      return Object.assign({}, state, payload);
     default:
       return state;
   }

@@ -1,5 +1,8 @@
 import * as types from "./actionTypes";
-import { beginApiCall, apiCallError } from "./apiCallStatusActions";
+import {
+    beginApiCall,
+    apiCallError
+} from "./apiCallStatusActions";
 import {
     DiscoverProvider
 } from '../../services';

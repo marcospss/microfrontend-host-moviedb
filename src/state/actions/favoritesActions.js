@@ -1,5 +1,8 @@
 import * as types from "./actionTypes";
-import { beginApiCall, apiCallError } from "./apiCallStatusActions";
+import {
+    beginApiCall,
+    apiCallError
+} from "./apiCallStatusActions";
 import {
     LocalStorage
 } from '../../services';
@@ -51,11 +54,9 @@ export const saveFavorite = (data) => {
     return (dispatch) => {
         return LocalStorage.save(data)
             .then(response => {
-                console.log(response);
                 dispatch(saveFavoriteSuccess(response));
             })
             .catch(response => {
-                console.error(response);
                 throw response;
             });
     };
@@ -65,13 +66,10 @@ export const removeFavorite = (data) => {
     return (dispatch) => {
         return LocalStorage.remove(data)
             .then(response => {
-                console.log(response);
                 dispatch(removeFavoriteSuccess(response));
             })
             .catch(response => {
-                console.error(response);
                 throw response;
             });
     };
 };
-

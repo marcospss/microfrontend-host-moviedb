@@ -1,13 +1,14 @@
 import React from "react";
 import styled from 'styled-components';
 
-import { HelperProvider as helper } from './../services';
+import { HelperProvider } from './../services';
+
 const CardCast = (props) => {
-    const { profile_path, character, name } = props.data;
+    const { data: { profile_path, character, name } } = props;
     return (
         <Team>
             <figure className="team-image">
-                <img src={ helper.backdropImage(profile_path) } alt={ character } />
+                <img src={ HelperProvider.backdropImage(profile_path) } alt={ character } />
             </figure>
             <h2 className="team-name">{ character }</h2>
             <small className="team-title">{ name }</small>

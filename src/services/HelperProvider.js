@@ -1,8 +1,6 @@
-import {
-    SETTINGS as IMAGE_SETTINGS
-} from "./../config/ImageSettings";
-import axios from 'axios';
+import IMAGES_SETTINGS from "./../config/ImageSettings";
 import defaultImage from './../assets/images/default-image.png';
+import axios from "axios";
 
 /**
  * Performing multiple concurrent requests
@@ -22,27 +20,27 @@ export function title(item) {
 }
 
 export function posterImage(poster_path, size = 'w92') {
-    const sizeImage = IMAGE_SETTINGS.poster_sizes[size];
+    const sizeImage = IMAGES_SETTINGS.poster_sizes[size];
     if (!poster_path) {
         return `${defaultImage}`;
     }
-    return `${IMAGE_SETTINGS.secure_base_url}${sizeImage}${poster_path}`;
+    return `${IMAGES_SETTINGS.secure_base_url}${sizeImage}${poster_path}`;
 }
 
 export function backdropImage(backdrop_path, size = 'w300') {
-    const sizeImage = IMAGE_SETTINGS.backdrop_sizes[size];
+    const sizeImage = IMAGES_SETTINGS.backdrop_sizes[size];
     if (!backdrop_path) {
         return `${defaultImage}`;
     }
-    return `${IMAGE_SETTINGS.secure_base_url}${sizeImage}${backdrop_path}`;
+    return `${IMAGES_SETTINGS.secure_base_url}${sizeImage}${backdrop_path}`;
 }
 
 export function profileImage(profile_sizes, size = 'w185') {
-    const sizeImage = IMAGE_SETTINGS.profile_sizes[size];
+    const sizeImage = IMAGES_SETTINGS.profile_sizes[size];
     if (!profile_sizes) {
         return `${defaultImage}`;
     }
-    return `${IMAGE_SETTINGS.secure_base_url}${sizeImage}${profile_sizes}`;
+    return `${IMAGES_SETTINGS.secure_base_url}${sizeImage}${profile_sizes}`;
 }
 
 export function convertMinutesToTime(data) {

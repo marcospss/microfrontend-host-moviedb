@@ -1,7 +1,5 @@
-import {
-  SETTINGS
-} from './../config/settings';
-import axios from 'axios';
+import SETTINGS from './../config/settings';
+import INSTANCE from './../config/instance';
 
 /**
  * Get Credits
@@ -14,7 +12,7 @@ import axios from 'axios';
 export function getCredits(properties) {
   const mediaType = properties.mediaType,
     id = properties.mediaId;
-  return axios.get(`${SETTINGS.apiEndpoint}/${mediaType}/${id}/credits?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
+  return INSTANCE.get(`/${mediaType}/${id}/credits?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
 }
 
 /**
@@ -25,7 +23,7 @@ export function getCredits(properties) {
 export function getRecommendations(properties) {
   const mediaType = properties.mediaType,
     id = properties.mediaId;
-  return axios.get(`${SETTINGS.apiEndpoint}/${mediaType}/${id}/recommendations?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
+  return INSTANCE.get(`/${mediaType}/${id}/recommendations?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
 }
 
 /**
@@ -37,7 +35,7 @@ export function getRecommendations(properties) {
 export function getSimilar(properties) {
   const mediaType = properties.mediaType,
     id = properties.mediaId;
-  return axios.get(`${SETTINGS.apiEndpoint}/${mediaType}/${id}/similar?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
+  return INSTANCE.get(`/${mediaType}/${id}/similar?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
 }
 
 /**
@@ -47,7 +45,7 @@ export function getSimilar(properties) {
  */
 export function getTopRated(properties) {
   const mediaType = properties.mediaType;
-  return axios.get(`${SETTINGS.apiEndpoint}/${mediaType}/top_rated?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
+  return INSTANCE.get(`/${mediaType}/top_rated?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
 }
 
 /**
@@ -58,7 +56,7 @@ export function getTopRated(properties) {
 export function getDetails(properties) {
   const mediaType = properties.mediaType,
     id = properties.mediaId;
-  return axios.get(`${SETTINGS.apiEndpoint}/${mediaType}/${id}?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
+  return INSTANCE.get(`/${mediaType}/${id}?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
 }
 
 /**
@@ -67,7 +65,7 @@ export function getDetails(properties) {
  * @param properties
  */
 export function getGenres(mediaType) {
-  return axios.get(`${SETTINGS.apiEndpoint}/genre/${mediaType}/list?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
+  return INSTANCE.get(`/genre/${mediaType}/list?api_key=${SETTINGS.apikey}&language=${SETTINGS.language}`);
 }
 
 /**
@@ -75,12 +73,12 @@ export function getGenres(mediaType) {
  * Return list years
  */
 export function getYears() {
-  const arrYears = [],
+  let arrYears = [],
     date = new Date(),
     currentYear = date.getFullYear();
 
   for (let year = currentYear + 1; year >= 1900; year -= 1) {
-    arrYears.push(year);
+    arrYears = [...arrYears, year]
   }
   return arrYears;
 }

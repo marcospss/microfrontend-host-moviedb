@@ -1,22 +1,22 @@
 import React, { Component } from "react";
 import styled from 'styled-components';
 
-import { HelperProvider as helper, SearchProvider as search} from './../services';
+import { SearchProvider } from './../services';
 import CardBackdropImage from './CardBackdropImage';
 class Search extends Component {
-    state = {
-        collection: [],
-        showInputSearch: false,
-        isLoading: true
-    }
 
     constructor() {
         super();
+        this.state = {
+            collection: [],
+            showInputSearch: false,
+            isLoading: true
+        }
         this.inputSearch = React.createRef();
     }
 
     searchMedia(query) {
-        this.search.getMultiSearch(query)
+        SearchProvider.getMultiSearch(query)
             .then(result => {
                 this.setState({
                     collection: result.data.results,

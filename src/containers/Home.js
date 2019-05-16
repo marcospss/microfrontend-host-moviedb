@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import { bindActionCreators } from "redux";
 
@@ -15,12 +16,10 @@ import {
 
 class Home extends Component {  
     componentDidMount() {
-        const { actions, popular, filterProperties } = this.props;
-        if(Object.keys(popular).length === 0) {
-            actions.loadPopular(filterProperties.discover);
-            actions.loadTopRated(filterProperties.topRated);
-            actions.loadFavorites();
-        }
+        const { actions, filterProperties } = this.props;
+        actions.loadPopular(filterProperties.discover);
+        actions.loadTopRated(filterProperties.topRated);
+        actions.loadFavorites();
     }
 
     render() {
@@ -35,14 +34,14 @@ class Home extends Component {
                         </header>
                         <div className="col-md-9">
                             <CarouselPopular 
-                                data={popularResults}
+                                data={popularResults.slice(0,12)}
                                 mediaType="movie" 
                             />
                         </div>
                     <div className="col-md-3">
                         <div className="row">
                             { 
-                                popularResults && popularResults.splice(3,3).map(item => {
+                                popularResults && popularResults.slice(12,15).map(item => {
                                     return (
                                         <div key={item.id} className="col-sm-6 col-md-12">
                                             <CardBackdropImage
@@ -60,7 +59,7 @@ class Home extends Component {
                 </article>
                 <article className="row">
                     { 
-                        popularResults && popularResults.splice(4,4).map(item => {
+                        popularResults && popularResults.slice(15,19).map(item => {
                             return (
                                 <div key={item.id} className="col-sm-6 col-md-3">
                                     <CardBackdropImage
@@ -81,7 +80,7 @@ class Home extends Component {
                     <div className="col-sm-12">
                         <ul className="list-unstyled">
                             { 
-                                topRatedResults && topRatedResults.splice(0,9).map(item => {
+                                topRatedResults && topRatedResults.slice(0,9).map(item => {
                                     return (
                                         <li key={item.id} className="col-sm-12 col-md-4">
                                             <CardPosterImage 
@@ -108,13 +107,6 @@ class Home extends Component {
 
 function mapStateToProps(state) {
     return {
-        // popular: Object.keys(state.popular).length === 0 ? []
-        // : state.popular.results.map(media => {
-        //     return {
-        //       ...media,
-        //       isFavorite: !!state.favorites.find(favorite => favorite.id === media.id)
-        //     };
-        // }),
         popular: state.popular,
         topRated: state.topRated,
         favorites: state.favorites,
@@ -153,7 +145,7 @@ Home.propTypes = {
     filterProperties: PropTypes.object.isRequired
 };
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(Home);
+)(Home));
