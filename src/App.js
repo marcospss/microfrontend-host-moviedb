@@ -4,6 +4,7 @@ import { ConnectedRouter } from "connected-react-router";
 
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Toast from './components/ToastContainer';
 import Routes from './routes';
 
 // REDUX
@@ -24,6 +25,7 @@ const App = () => (
       <Footer />
     </div>
     </ConnectedRouter>
+    <Toast />
   </Provider>
 );
 

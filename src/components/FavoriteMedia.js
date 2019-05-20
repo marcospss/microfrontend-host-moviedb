@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import styled from 'styled-components';
 
+
 import * as favoritesActions from "./../state/actions/favoritesActions";
 import { HelperProvider } from './../services';
 
@@ -17,11 +18,13 @@ class FavoriteMedia extends Component {
 
     saveFavorite = (data) => {
         this.props.actions.saveFavorite(data);
+        HelperProvider.toastContainer('success', `${data.title} saved successfully!`);
         this.props.actions.loadFavorites();
     };
     
     removeFavorite = (data) => {
         this.props.actions.removeFavorite(data);
+        HelperProvider.toastContainer('info', `${data.title} removed successfully!`);
         this.props.actions.loadFavorites();
     };
 
