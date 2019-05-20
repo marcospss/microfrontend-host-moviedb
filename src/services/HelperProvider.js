@@ -1,6 +1,8 @@
+import axios from "axios";
+import { toast } from "react-toastify";
+
 import IMAGES_SETTINGS from "./../config/ImageSettings";
 import defaultImage from './../assets/images/default-image.png';
-import axios from "axios";
 
 /**
  * Performing multiple concurrent requests
@@ -50,6 +52,7 @@ export function convertMinutesToTime(data) {
     return `${hours}h ${totalMinutes}m`;
 }
 
-export function scrollTopPage() {
-    window.scrollTo(0, 0);
+export function toastContainer(type, message) {
+    toast[type](message);
 }
+
