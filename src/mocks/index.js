@@ -139,7 +139,61 @@ export default {
             "popularity": 49.222,
             "mediaType": "movie"
           }
-
-      ]
+      ],
+      popular: {
+        "page": 1,
+        "total_results": 417379,
+        "total_pages": 20869,
+        "results": [
+          {
+            "vote_count": 430,
+            "id": 458156,
+            "video": false,
+            "vote_average": 7.5,
+            "title": "John Wick: Chapter 3 – Parabellum",
+            "popularity": 467.661,
+            "poster_path": "/ziEuG1essDuWuC5lpWUaw1uXY2O.jpg",
+            "original_language": "en",
+            "original_title": "John Wick: Chapter 3 – Parabellum",
+            "genre_ids": [80, 28, 53],
+            "backdrop_path": "/kcga7xuiQVqM9WHfWnAbidxU7hd.jpg",
+            "adult": false,
+            "overview": "Super-assassin John Wick returns with a $14 million price tag on his head and an army of bounty-hunting killers on his trail. After killing a member of the shadowy international assassin’s guild, the High Table, John Wick is excommunicado, but the world’s most ruthless hit men and women await his every turn.",
+            "release_date": "2019-05-15"
+          },
+          {
+            "vote_count": 20,
+            "id": 280960,
+            "video": false,
+            "vote_average": 5.2,
+            "title": "Catarina and the others",
+            "popularity": 264.211,
+            "poster_path": "/kZMCbp0o46Tsg43omSHNHJKNTx9.jpg",
+            "original_language": "pt",
+            "original_title": "Catarina e os Outros",
+            "genre_ids": [18, 9648],
+            "backdrop_path": "/9nDiMhvL3FtaWMsvvvzQIuq276X.jpg",
+            "adult": false,
+            "overview": "Outside, the first sun rays break the dawn.  Sixteen years old Catarina can't fall asleep.  Inconsequently, in the big city adults are moved by desire...  Catarina found she is HIV positive. She wants to drag everyone else along.",
+            "release_date": "2011-03-01"
+          },
+          {
+            "vote_count": 5857,
+            "id": 299534,
+            "video": false,
+            "vote_average": 8.5,
+            "title": "Avengers: Endgame",
+            "popularity": 252.715,
+            "poster_path": "/or06FN3Dka5tukK1e9sl16pB3iy.jpg",
+            "original_language": "en",
+            "original_title": "Avengers: Endgame",
+            "genre_ids": [12, 878, 28],
+            "backdrop_path": "/7RyHsO4yDXtBv1zUU3mTpHeQ0d5.jpg",
+            "adult": false,
+            "overview": "After the devastating events of Avengers: Infinity War, the universe is in ruins due to the efforts of the Mad Titan, Thanos. With the help of remaining allies, the Avengers must assemble once more in order to undo Thanos' actions and restore order to the universe once and for all, no matter what consequences may be in store.",
+            "release_date": "2019-04-24"
+          }
+        ]
+      }
       
 }
