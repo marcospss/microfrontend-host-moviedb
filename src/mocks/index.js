@@ -86,6 +86,60 @@ export default {
         "video": false,
         "vote_average": 7.5,
         "vote_count": 406
-      }
+      },
+      favorites: [
+        {
+            "vote_count": 4822,
+            "id": 299537,
+            "video": false,
+            "vote_average": 7.1,
+            "title": "Captain Marvel",
+            "popularity": 204.941,
+            "poster_path": "/AtsgWhDnHTq68L0lLsUrCnM7TjG.jpg",
+            "original_language": "en",
+            "original_title": "Captain Marvel",
+            "genre_ids": [28, 12, 878],
+            "backdrop_path": "/w2PMyoyLU22YvrGK3smVM9fW1jj.jpg",
+            "adult": false,
+            "overview": "The story follows Carol Danvers as she becomes one of the universe’s most powerful heroes when Earth is caught in the middle of a galactic war between two alien races. Set in the 1990s, Captain Marvel is an all-new adventure from a previously unseen period in the history of the Marvel Cinematic Universe.",
+            "release_date": "2019-03-06",
+            "mediaType": "movie"
+          },
+          {
+            "adult": false,
+            "backdrop_path": "/88poTBTafMXaz73vYi3c74g0y2k.jpg",
+            "genre_ids": [10751, 16, 35, 14],
+            "id": 404368,
+            "original_language": "en",
+            "original_title": "Ralph Breaks the Internet",
+            "overview": "Video game bad guy Ralph and fellow misfit Vanellope von Schweetz must risk it all by traveling to the World Wide Web in search of a replacement part to save Vanellope's video game, \"Sugar Rush.\" In way over their heads, Ralph and Vanellope rely on the citizens of the internet -- the netizens -- to help navigate their way, including an entrepreneur named Yesss, who is the head algorithm and the heart and soul of trend-making site BuzzzTube.",
+            "poster_path": "/lvfIaThG5HA8THf76nghKinjjji.jpg",
+            "release_date": "2018-11-20",
+            "title": "Ralph Breaks the Internet",
+            "video": false,
+            "vote_average": 7.2,
+            "vote_count": 2433,
+            "popularity": 55.361,
+            "mediaType": "movie"
+          },
+          {
+            "adult": false,
+            "backdrop_path": "/8kPozGb4BDrcWBSsGPrkULG2tP9.jpg",
+            "genre_ids": [28, 12, 16, 35, 10751, 878, 14],
+            "id": 280217,
+            "original_language": "en",
+            "original_title": "The Lego Movie 2: The Second Part",
+            "overview": "It's been five years since everything was awesome and the citizens are facing a huge new threat: LEGO DUPLO® invaders from outer space, wrecking everything faster than they can rebuild.",
+            "poster_path": "/QTESAsBVZwjtGJNDP7utiGV37z.jpg",
+            "release_date": "2019-01-26",
+            "title": "The Lego Movie 2: The Second Part",
+            "video": false,
+            "vote_average": 6.6,
+            "vote_count": 471,
+            "popularity": 49.222,
+            "mediaType": "movie"
+          }
+
+      ]
       
 }
