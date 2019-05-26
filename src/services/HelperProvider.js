@@ -52,6 +52,10 @@ export function convertMinutesToTime(data) {
     return `${hours}h ${totalMinutes}m`;
 }
 
+export function scrollTopPage() {
+    window.scroll(0,0);
+}
+
 export function toastContainer(type, message) {
     toast[type](message);
 }
