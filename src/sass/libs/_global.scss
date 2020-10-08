@@ -3,14 +3,14 @@
  */
 
 $browser-context: 15; // Default
-body {
-    background: $bg-color url(./assets/images/background.jpg) top center;
+#site-content {
+    background: $bg-color url(../../assets/images/background.jpg) top center;
     color: $body-color;
     font-family: $primary-font;
     font-size: #{$browser-context}px;
     font-weight: 400;
     line-height: normal;
-}
+
 
 h1,
 h2,
@@ -69,4 +69,5 @@ form {
     input[type="reset"] {
         @extend .button;
     }
+}
 }

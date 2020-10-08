@@ -115,7 +115,8 @@ const Button = styled.button`
     border: none;
     cursor: pointer;
     font-size: 1.5em;
-    background: none;
+    background: #4950576e;
+    
 `;
 
 export default connect(

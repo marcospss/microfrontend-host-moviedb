@@ -19,8 +19,8 @@ const Header = () => {
                     <button type="button" className="menu-toggle"><i className="fa fa-bars"></i></button>
                     <ul className="menu">
                         <li className="menu-item"><NavLink activeClassName="current-menu-item" exact to='/'>Home</NavLink></li>
-                        <li className="menu-item"><NavLink activeClassName="current-menu-item" to='/discover'>Discover</NavLink></li>
-                        <li className="menu-item"><NavLink activeClassName="current-menu-item" to='/favorites'>Favorites</NavLink></li>
+                        <li className="menu-item"><NavLink activeClassName="current-menu-item" exact to='/discover'>Discover</NavLink></li>
+                        <li className="menu-item"><NavLink activeClassName="current-menu-item" exact to='/favorites'>Favorites</NavLink></li>
                     </ul>
                     <Search />
                 </div>
